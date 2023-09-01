@@ -21,7 +21,7 @@ function preload() {
 */
 function setup() {
       CreateCanvas(480,480);
-      Background(255, 0, 0,);
+      Background(255, 100, 10,);
 }
 
 
