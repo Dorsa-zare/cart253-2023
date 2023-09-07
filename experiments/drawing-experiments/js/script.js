@@ -23,10 +23,9 @@ function setup() {
 
     createCanvas(500,500);
 
-    background(183, 204, 155);
+    background(168, 212, 237);
 
-
-    stroke(200,160,0);
+    stroke(120,120,20);
 
    
     
