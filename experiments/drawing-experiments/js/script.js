@@ -63,7 +63,10 @@ function setup() {
     ellipse(230,265,10,10);
     ellipse(269,265,10,10);
 
-    fill(250,160,0);
+
+    stroke(200,120,0);
+    strokeWeight(5);
+    fill(250,200,0);
     line(235,295,265,295);
 
 
