@@ -1,15 +1,13 @@
 /**
- * Title of Project
- * Author Name
+ * Activity 2: Draw an alien
+ * Dorsa Zare
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
- */
+ * Draws an alien on the canvas.
 
 "use strict";
 
 /**
- * Description of preload
+ * Does Nothing
 */
 function preload() {
 
@@ -17,7 +15,7 @@ function preload() {
 
 
 /**
- * Description of setup
+ * Draws an alien
 */
 function setup() {
 
@@ -56,7 +54,7 @@ rect(320,380,100,25);
 
 
 /**
- * Description of draw()
+ * Does nothing()
 */
 function draw() {
 
