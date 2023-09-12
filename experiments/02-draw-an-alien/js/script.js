@@ -23,6 +23,15 @@ function setup() {
 createCanvas(640,488);
 background(237, 166, 187);
 
+
+
+}
+
+
+/**
+ * Does nothing()
+*/
+function draw() {
 noStroke();
 
 //Drawing the body
@@ -48,14 +57,5 @@ stroke(200,0,0);
 strokeWeight(8);
 rectMode(CENTER);
 rect(320,380,100,25);
-
-
-}
-
-
-/**
- * Does nothing()
-*/
-function draw() {
 
 }
