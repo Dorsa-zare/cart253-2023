@@ -28,7 +28,7 @@ function setup() {
  * Description of draw()
 */
 function draw() {
- background(150,170,100);
+ background(mouseX,170,mouseY);
  rectMode(CENTER);
  rect(width / 2, height / 2 , 100, 100);
 }
