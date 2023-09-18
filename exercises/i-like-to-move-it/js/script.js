@@ -11,13 +11,14 @@
  * Description of preload
 */
 
-
+// background color
 let bg = {
     r: 140,
     g: 188,
     b: 222,
 };
 
+// The sun
 let circle = {
     x: -50, // Start the sun off-screen to the left
     y: 300,//  Start the sun above the middle
@@ -28,6 +29,18 @@ let circle = {
         b: 74
     },
 };
+
+// Cloud
+let cloud = {
+    x: 0, 
+    y: 200,
+    width: 150,
+    height: 70,
+    fill: 200,
+    speed: 2,
+
+}
+
 
 // First building
 let building = {
@@ -134,33 +147,28 @@ noStroke();
 */
 function draw() {
     
-      // Maping the sun's x and y position to mouse movement
+     //Drawing the Sun
+
+    // Maping the sun's x and y position to mouse movement
     circle.x = map(mouseX, 0, width, -50, width + 50);
     circle.y = map(mouseY, 0, height, 50, height - 50);
-
     // Map background color darkness to sun's y position
     let darkness = map(circle.y, 50, height - 50, 0, 50);
     background(140 - darkness, 188 - darkness, 222 - darkness);
-
    // Calculate the sun's size based on its position
    let sunSize = map(circle.y,50,height - 50, 200, 50);
-
     // Set the fill color for the sun
     fill(circle.fill.r, circle.fill.g, circle.fill.b);
-
     // Drawing the sun
     ellipse(circle.x, circle.y, sunSize);
     
-
 
     //Drawing building 1
 
      // Set the fill color for the rectangle of the building
      fill(building.fill.r, building.fill.g, building.fill.b);
-
     //Drawing rectangle for the building
     rect(building.x,building.y,building.w,building.h);
-
     //set fill color for the roof of the building
     fill(roof.fill.r,roof.fill.g,roof.fill.b);
     //Drawing the roof
@@ -168,14 +176,12 @@ function draw() {
 
 
 
-
    //Drawing building 2
+
         // Set the fill color for the rectangle of the building
      fill(building2.fill.r, building2.fill.g, building2.fill.b);
-
      //Drawing rectangle for the building
      rect(building2.x,building2.y,building2.w,building2.h);
- 
      //set fill color for the roof of the building
      fill(roof2.fill.r,roof2.fill.g,roof2.fill.b);
      //Drawing the roof
@@ -183,17 +189,27 @@ function draw() {
  
  
    //Drawing building 3
+
         // Set the fill color for the rectangle of the building
         fill(building3.fill.r, building3.fill.g, building3.fill.b);
-
         //Drawing rectangle for the building
         rect(building3.x,building3.y,building3.w,building3.h);
-    
         //set fill color for the roof of the building
         fill(roof3.fill.r,roof3.fill.g,roof3.fill.b);
         //Drawing the roof
        triangle (roof3.x1,roof3.y1,roof3.x2,roof3.y2,roof3.x3,roof3.y3);
     
-    
+
+        //Drawing the cloud and moving it
+        
+         // Move the cloud to the right
+         cloud.x += cloud.speed;
+         // Set the fill color for the cloud
+        fill(cloud.fill); 
+        // Drawing the cloud
+        ellipse(cloud.x, cloud.y, cloud.width, cloud.height);
+        
+        
+        
 
 }
