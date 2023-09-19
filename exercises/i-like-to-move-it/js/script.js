@@ -17,7 +17,7 @@ let circle = {
     x: -50, // Start the sun off-screen to the left
     y: 300,//  Start the sun above the middle
     size: 50,
-    fill: {
+    fill: {   //Yellow 
         r: 255,
         g: 231,
         b: 74
@@ -31,7 +31,7 @@ let cloud = {
     y: 200,
     width: 150,
     height: 70,
-    fill: 200,
+    fill: 200, 
     speed: 2,
 }
 
@@ -127,10 +127,11 @@ function draw() {
     circle.y = map(mouseY, 0, height, 50, height - 50);
     // Maping background color darkness to sun's y position
     let darkness = map(circle.y, 50, height - 50, 0, 50);
-    background(160 - darkness/10, 188 - darkness, 222 - darkness);
+    // Increasing the red color and making the background darker if the sun's y number increases
+    background(160 - darkness/10, 188 - darkness, 222 - darkness); 
    // Calculating the sun's size based on its position
    let sunSize = map(circle.y,50,height - 50, 200, 50);
-    // Setting the fill color for the sun
+    // Setting the fill color for the sun (Yellow)
     fill(circle.fill.r, circle.fill.g, circle.fill.b);
     // Drawing the sun
     ellipse(circle.x, circle.y, sunSize);
@@ -181,12 +182,12 @@ function draw() {
         
          // Moving the cloud to the right
          cloud.x += cloud.speed;
-         // Setting the fill color for the cloud
+         // Setting the fill color for the cloud (Gray)
         fill(cloud.fill); 
         // Drawing the cloud
         ellipse(cloud.x, cloud.y, cloud.width, cloud.height);
 
-        // Looping the cloud
+        // Looping the cloud so it comes back to canvas
         cloud.x = constrain(cloud.x, -100, 900);
         if (cloud.x==900){
             cloud.x=-100;
