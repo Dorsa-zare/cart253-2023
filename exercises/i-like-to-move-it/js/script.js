@@ -182,16 +182,18 @@ function draw() {
         
          // Moving the cloud to the right
          cloud.x += cloud.speed;
+         
+         // Looping the cloud so it comes back to canvas
+         cloud.x = constrain(cloud.x, -100, 900);
+         if (cloud.x==900){
+             cloud.x=-100;
+         }
+
          // Setting the fill color for the cloud (Gray)
         fill(cloud.fill); 
         // Drawing the cloud
         ellipse(cloud.x, cloud.y, cloud.width, cloud.height);
 
-        // Looping the cloud so it comes back to canvas
-        cloud.x = constrain(cloud.x, -100, 900);
-        if (cloud.x==900){
-            cloud.x=-100;
-        }
         
 
 }
