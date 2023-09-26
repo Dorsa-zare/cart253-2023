@@ -2,13 +2,13 @@
  * Dodge em
  * Dorsa Zare
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ * This is a simple game where a squirrel is being followed by a bee.
+ * User should try not to get bitten by the bee by moving the mouse. 
  */
 
 "use strict";
 
-
+// The bee which will be following th euser
 let bee = {
     x: 0,
     y: 250,
@@ -16,20 +16,19 @@ let bee = {
     speed: 5,
 };
 
-
+// The user which is a squirrel character
 let user = {
     x: 250,
     y: 250,
     size: 100
 };
 
-
 let backgroundImage;
 let squirrelImage;
 let beeImage;
 
 /**
- * None
+ * The images for the squirrel, the bee and the background are in preload.
 */
 function preload() {
 
@@ -45,7 +44,7 @@ squirrelImage = loadImage("assets/images/squirrel.png");
 }
 
 /**
- * Description of setup
+ * The canvas is created in setup 
 */
 function setup() {
 
@@ -57,7 +56,7 @@ function setup() {
 }
 
 /**
- * Description of draw()
+ * The squirrel and the bee and their actions are included in the draw.
 */
 function draw() {
 
