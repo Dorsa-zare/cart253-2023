@@ -60,9 +60,15 @@ function setup() {
 */
 function draw() {
 
-  // Use the loaded background image
+
+  // Use the loaded background images
   image(backgroundImage, 0, 0, width, height);
 
+    //Display text
+    textSize (25)
+    text ("Dodge the bee!", 550, 40);
+    fill (30);
+  
 
   // Update squirrel position to follow the mouse
   squirrel.x = mouseX;
