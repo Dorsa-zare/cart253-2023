@@ -9,17 +9,13 @@
 "use strict";
 
 
-let fallLeaf = {
+let bee = {
     x: 0,
     y: 250,
     size: 50, 
     speed: 5,
-    fill: {
-        r: 255,
-        g: 102,
-        b: 0 
-    }
 };
+
 
 let user = {
     x: 250,
@@ -27,9 +23,10 @@ let user = {
     size: 100
 };
 
-let numStatic = 5000;
+
 let backgroundImage;
 let squirrelImage;
+let beeImage;
 
 /**
  * None
@@ -38,6 +35,10 @@ function preload() {
 
     // Load the background image 
 backgroundImage = loadImage("assets/images/bg.jpg");
+
+   // Load the bee image ( from https://www.pngegg.com/en/png-bwikt/download)
+   beeImage = loadImage("assets/images/bee.png");
+
 // Load the squirrel image 
 squirrelImage = loadImage("assets/images/squirrel.png");
 
@@ -49,8 +50,8 @@ squirrelImage = loadImage("assets/images/squirrel.png");
 function setup() {
 
     createCanvas(windowWidth, windowHeight);
-    fallLeaf.x = random(0, width);
-    fallLeaf.y = random(0, height);
+    bee.x = random(0, width);
+    bee.y = random(0, height);
     noCursor();
     
 }
@@ -63,49 +64,42 @@ function draw() {
   // Use the loaded background image
   image(backgroundImage, 0, 0, width, height);
 
-  // Display static
-  for (let i = 0; i < numStatic; i++) {
-      let x = random(0, width);
-      let y = random(0, height);
-      stroke(255);
-      point(x, y);
-  }
 
   // Update user position to follow the mouse
   user.x = mouseX;
   user.y = mouseY;
 
-  // Calculate direction towards the fall leaf
-  let dx = fallLeaf.x - user.x;
-  let dy = fallLeaf.y - user.y;
+  // Calculate direction towards the bee
+  let dx = bee.x - user.x;
+  let dy = bee.y - user.y;
   let distance = sqrt(dx * dx + dy * dy);
 
-  // Move fall leaf towards the user based on speed
+  // Move bee towards the user based on speed
   if (distance > 0) {
-      fallLeaf.x -= (dx / distance) * fallLeaf.speed;
-      fallLeaf.y -= (dy / distance) * fallLeaf.speed;
+      bee.x -= (dx / distance) * bee.speed;
+      bee.y -= (dy / distance) * bee.speed;
   }
 
-  // Check for not touching the fall leaf
-  let d = dist(user.x, user.y, fallLeaf.x, fallLeaf.y);
-  if (d < fallLeaf.size / 2 + user.size / 2) {
+  // Check for not touching the bee
+  let d = dist(user.x, user.y, bee.x, bee.y);
+  if (d < bee.size / 2 + user.size / 2) {
       noLoop();
   }
 
-  // Change the size of fall leaf based on distance from the user
-  if (d < fallLeaf.size + user.size) {
-      // If close, grow fall leaf
-      fallLeaf.size += 1;
-      fallLeaf.size = min(fallLeaf.size, 200); // Set a maximum size
+  // Change the size of bee based on distance from the user
+  if (d < bee.size + user.size) {
+      // If close, grow bee 
+      bee.size += 1;
+      bee.size = min(bee.size, 200); // Set a maximum size
   } else {
-      // If further away, shrink fall leaf
-      fallLeaf.size -= 1;
-      fallLeaf.size = max(fallLeaf.size, 50); // Set a minimum size
+      // If further away, shrink bee
+      bee.size -= 1;
+      bee.size = max(bee.size, 50); // Set a minimum size
   }
 
-  // Display fall leaf at its position
-  fill(fallLeaf.fill.r, fallLeaf.fill.g, fallLeaf.fill.b);
-  ellipse(fallLeaf.x, fallLeaf.y, fallLeaf.size);
+   // Display the bee image
+   image(beeImage, bee.x - bee.size / 2, bee.y - bee.size / 2, bee.size, bee.size);
+
 
   // Display the squirrel image as the user
   image(squirrelImage, user.x - user.size / 2, user.y - user.size / 2, user.size, user.size);
