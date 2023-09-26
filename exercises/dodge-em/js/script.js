@@ -89,11 +89,11 @@ function draw() {
   if (d < bee.size + squirrel.size) {
       // If close, grow bee 
       bee.size += 1;
-      bee.size = min(bee.size, 200); // Set a maximum size
+      bee.size = min(bee.size, 200); // Maximum size
   } else {
       // If further away, shrink bee
       bee.size -= 1;
-      bee.size = max(bee.size, 50); // Set a minimum size
+      bee.size = max(bee.size, 50); // Minimum size
   }
 
    // Display the bee image
