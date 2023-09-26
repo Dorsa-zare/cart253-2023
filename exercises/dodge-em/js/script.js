@@ -8,7 +8,7 @@
 
 "use strict";
 
-// The bee which will be following th euser
+// The bee which will be following the squirrel
 let bee = {
     x: 0,
     y: 250,
@@ -16,11 +16,11 @@ let bee = {
     speed: 5,
 };
 
-// The user which is a squirrel character
-let user = {
+// The squirrel which is the user's character
+let squirrel = {
     x: 250,
     y: 250,
-    size: 100
+    size: 80
 };
 
 let backgroundImage;
@@ -64,29 +64,29 @@ function draw() {
   image(backgroundImage, 0, 0, width, height);
 
 
-  // Update user position to follow the mouse
-  user.x = mouseX;
-  user.y = mouseY;
+  // Update squirrel position to follow the mouse
+  squirrel.x = mouseX;
+  squirrel.y = mouseY;
 
   // Calculate direction towards the bee
-  let dx = bee.x - user.x;
-  let dy = bee.y - user.y;
+  let dx = bee.x - squirrel.x;
+  let dy = bee.y - squirrel.y;
   let distance = sqrt(dx * dx + dy * dy);
 
-  // Move bee towards the user based on speed
+  // Move bee towards the squirrel based on speed
   if (distance > 0) {
       bee.x -= (dx / distance) * bee.speed;
       bee.y -= (dy / distance) * bee.speed;
   }
 
   // Check for not touching the bee
-  let d = dist(user.x, user.y, bee.x, bee.y);
-  if (d < bee.size / 2 + user.size / 2) {
+  let d = dist(squirrel.x, squirrel.y, bee.x, bee.y);
+  if (d < bee.size / 2 + squirrel.size / 2) {
       noLoop();
   }
 
-  // Change the size of bee based on distance from the user
-  if (d < bee.size + user.size) {
+  // Change the size of bee based on distance from the squirrel
+  if (d < bee.size + squirrel.size) {
       // If close, grow bee 
       bee.size += 1;
       bee.size = min(bee.size, 200); // Set a maximum size
@@ -97,9 +97,10 @@ function draw() {
   }
 
    // Display the bee image
-   image(beeImage, bee.x - bee.size / 2, bee.y - bee.size / 2, bee.size, bee.size);
+   image(beeImage, bee.x, bee.y, bee.size, bee.size)
 
 
-  // Display the squirrel image as the user
-  image(squirrelImage, user.x - user.size / 2, user.y - user.size / 2, user.size, user.size);
+  // Display the squirrel image as the squirrel
+  image(squirrelImage, squirrel.x, squirrel.y, squirrel.size, squirrel.size);
+
 }
