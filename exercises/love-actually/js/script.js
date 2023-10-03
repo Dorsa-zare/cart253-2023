@@ -105,11 +105,11 @@ function instruction() {
   pop();
 
   push();
-  textSize(17);
+  textSize(12);
   fill(255);
   textAlign(CENTER,CENTER);
-  text("Move with the arrows on your keyboard to go to your soulmate.", width / 2, height / 2 - 20);
-  text("Remember if someone ghosts you, they're not your soulmate! ", width / 2, height / 2 + 20);
+  text(" Use the arrow keys on your keyboard to navigate towards your potential soulmate. ", width / 2, height / 2 - 20);
+  text("Ghosted? No problem! Keep playing to find your soulmate! ", width / 2, height / 2 + 20);
   pop();
 
   push();
@@ -162,10 +162,10 @@ function instruction() {
 
   function love() {
     push();
-    textSize(30);
+    textSize(20);
     fill(207, 95, 139);
     textAlign(CENTER, CENTER);
-    text("You found your soulmate!", width / 2, height / 2);
+    text("You've Successfully Located Your Soulmate!", width / 2, height / 2);
     pop();
 
     // Check for Enter key press to restart the game
@@ -200,10 +200,10 @@ function ghost() {
 
 function ghostedText() {
   push();
-  textSize(40);
+  textSize(20);
   fill(207, 95, 139); 
   textAlign(CENTER, CENTER);
-  text("You just got ghosted! ", width / 2, height / 2);
+  text("Oops, You've Been Ghosted! But No Worries! ", width / 2, height / 2);
 
   textSize(20);
   fill(255);
