@@ -134,30 +134,33 @@ function instruction() {
     if (boy.x > width) {
       state = "ghost";
       ghosted = true;
-      boy.x = width; // Ensure the boy is still visible on the screen
     }
   
     // Calculate the distance between the girl and boy
     let d = dist(girl.x, girl.y, boy.x, boy.y);
   
-    // Check if the girl and boy touch
+    // Check if the girl and boy overlay
     if (d < girl.size / 2 + boy.size / 2) {
       state = "love";
     }
 
-    // Control the girl with arrow keys
-    if (keyIsDown(LEFT_ARROW)) {
-      girl.x -= 2;
-    } else if (keyIsDown(RIGHT_ARROW)) {
-      girl.x += 2;
-    } else if (keyIsDown(UP_ARROW)) {
-      girl.y -= 2;
-    } else if (keyIsDown(DOWN_ARROW)) {
-      girl.y += 2;
-    }
-  
+    girlMovement ();
     display();
 }
+
+
+function girlMovement() {
+  // Control the girl with arrow keys
+  if (keyIsDown(LEFT_ARROW)) {
+    girl.x -= 2;
+  } else if (keyIsDown(RIGHT_ARROW)) {
+    girl.x += 2;
+  } else if (keyIsDown(UP_ARROW)) {
+    girl.y -= 2;
+  } else if (keyIsDown(DOWN_ARROW)) {
+    girl.y += 2;
+  }
+      }
 
 
   function love() {
@@ -168,13 +171,20 @@ function instruction() {
     text("You've Successfully Located Your Soulmate!", width / 2, height / 2);
     pop();
 
-    // Check for Enter key press to restart the game
-    if (keyIsPressed && key === "Enter") {
-      setupBoy(); // Reset the boy's position
-      ghosted = false; // Reset the ghosted flag
-      state = "simulation"; // Transition back to the "simulation" state
-    }
+    checkKeyPressed ();
+  
 }
+
+
+function checkKeyPressed() {
+  // Check for Enter key press to restart the game
+  if (keyIsPressed && key === "Enter") {
+    setupBoy(); // Reset the boy's position
+    ghosted = false; // Reset the ghosted flag
+    state = "simulation"; // Transition back to the "simulation" state
+  }
+    }
+
 
 
 function ghost() {
@@ -190,13 +200,10 @@ function ghost() {
  }
 
  function display() {
-  image(girlImage, girl.x - girl.size / 2, girl.y - girl.size / 2, girl.size, girl.size);
-  if (ghosted) {
-    image(ghostImage, boy.x - boy.size / 2, boy.y - boy.size / 2, boy.size, boy.size);
-  } else {
-    image(boyImage, boy.x - boy.size / 2, boy.y - boy.size / 2, boy.size, boy.size);
-  }
+image(girlImage, girl.x - girl.size / 2, girl.y - girl.size / 2, girl.size, girl.size);
+image(boyImage, boy.x - boy.size / 2, boy.y - boy.size / 2, boy.size, boy.size);
 }
+
 
 function ghostedText() {
   push();
