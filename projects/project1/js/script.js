@@ -10,6 +10,9 @@ let cleaningBackground;
 let plantingBackground;
 let image1;
 let image2;
+let trashImages = []; // Array to store trash images
+let trashPositions = []; // Array to store trash positions
+let trashSize = 80; // Size of the trash images
 
 "use strict";
 
@@ -22,9 +25,29 @@ function preload() {
     plantingBackground = loadImage("assets/images/garden.png"); // Load the planting background image
     image1 = loadImage("assets/images/optionone.png"); // Load the first image
     image2 = loadImage("assets/images/optiontwo.png"); // Load the second image
-  
-
-}
+    
+    //Trash1 image and its position
+    trashImages.push(loadImage("assets/images/trash1.png"));
+    trashPositions.push({ x: 150, y: 200 });
+    //Trash2 image and its position
+    trashImages.push(loadImage("assets/images/trash2.png"));
+   trashPositions.push({ x: 350, y: 300 });
+   //Trash3 image and its position  
+   trashImages.push(loadImage("assets/images/trash3.png"));
+   trashPositions.push({ x: 500, y: 450 });
+    //Trash4 image and its position  
+    trashImages.push(loadImage("assets/images/trash4.png"));
+   trashPositions.push({ x: 560, y: 280 });
+   //Trash5 image and its position
+   trashImages.push(loadImage("assets/images/trash5.png"));
+   trashPositions.push({ x: 750, y: 430 });
+    //Trash6 image and its position
+    trashImages.push(loadImage("assets/images/trash6.png"));
+    trashPositions.push({ x: 950, y: 340 });
+    //Trash7 image and its position
+    trashImages.push(loadImage("assets/images/trash7.png"));
+    trashPositions.push({ x: 1050, y: 250 });
+  }
 
 
 /**
@@ -33,9 +56,6 @@ function preload() {
 function setup() {
     // Create a canvas that fills the entire screen
     createCanvas(windowWidth, windowHeight);
-
-  
-
 }
 
 
@@ -45,7 +65,7 @@ function setup() {
 function draw() {
 
     background(161, 199, 129);
-
+    
     if (state === "title") {
         title();
       } else if (state === "menu") {
@@ -56,6 +76,7 @@ function draw() {
         planting();
       }
     }
+
 
       function title() {
         drawTitleText();
@@ -159,12 +180,17 @@ function draw() {
 
 
       function cleaning() {
-        // Draw the cleaning background image as the background
-        image(cleaningBackground, 0, 0, width, height);
-      }      
+    // Draw the cleaning background image as the background
+    image(cleaningBackground, 0, 0, width, height);
+
+     // Display each trash image at its specified position
+  for (let i = 0; i < trashImages.length; i++) {
+    image(trashImages[i], trashPositions[i].x, trashPositions[i].y, trashSize, trashSize);
+  }
+}  
 
 
-      function planting() {
-        // Draw the planting background image as the background
-        image(plantingBackground, 0, 0, width, height);
-      }      
+function planting() {
+    // Draw the planting background image as the background
+    image(plantingBackground, 0, 0, width, height);
+  };
