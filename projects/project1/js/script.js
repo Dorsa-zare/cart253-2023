@@ -13,6 +13,9 @@ let image2;
 let trashImages = []; // Array to store trash images
 let trashPositions = []; // Array to store trash positions
 let trashSize = 80; // Size of the trash images
+let binImage;
+let handImage; 
+
 
 "use strict";
 
@@ -25,7 +28,11 @@ function preload() {
     plantingBackground = loadImage("assets/images/garden.png"); // Load the planting background image
     image1 = loadImage("assets/images/optionone.png"); // Load the first image
     image2 = loadImage("assets/images/optiontwo.png"); // Load the second image
-    
+   
+    binImage = loadImage("assets/images/bin.png"); // Load the bin image)
+    handImage = loadImage("assets/images/hand.png");  // Load the hand image
+   
+
     //Trash1 image and its position
     trashImages.push(loadImage("assets/images/trash1.png"));
     trashPositions.push({ x: 150, y: 200 });
@@ -180,13 +187,24 @@ function draw() {
 
 
       function cleaning() {
+    
+    // Hide the default cursor
+    noCursor();
+
     // Draw the cleaning background image as the background
     image(cleaningBackground, 0, 0, width, height);
+
+  
+    //Display bin
+    image(binImage, 80, 360, 200, 200);
 
      // Display each trash image at its specified position
   for (let i = 0; i < trashImages.length; i++) {
     image(trashImages[i], trashPositions[i].x, trashPositions[i].y, trashSize, trashSize);
   }
+
+     // Use the user's mouse position to display the hand image
+     image(handImage, mouseX, mouseY, 100, 100);
 }  
 
 
