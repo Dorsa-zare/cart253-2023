@@ -16,6 +16,9 @@ let trashSize = 80; // Size of the trash images
 let binImage;
 let handImage; 
 
+let isDraggingTrash = false;
+let draggedTrashIndex = -1;
+
 
 "use strict";
 
@@ -81,9 +84,10 @@ function draw() {
         cleaning();
       } else if (state === "planting") {
         planting();
-      }
+      } else if (state === "ending") {
+        ending();
     }
-
+}
 
       function title() {
         drawTitleText();
@@ -188,27 +192,85 @@ function draw() {
 
       function cleaning() {
     
+    // Clear the background to remove the previous frames
+    background(cleaningBackground);
+
+
     // Hide the default cursor
     noCursor();
 
-    // Draw the cleaning background image as the background
-    image(cleaningBackground, 0, 0, width, height);
+   // Display bin
+   image(binImage, 80, 360, 200, 200);
 
-  
-    //Display bin
-    image(binImage, 80, 360, 200, 200);
+   // Handle dragging behavior
+   if (isDraggingTrash) {
+    // Display the dragged trash image at the mouse position
+    image(trashImages[draggedTrashIndex], mouseX, mouseY, trashSize, trashSize);
+}
 
      // Display each trash image at its specified position
-  for (let i = 0; i < trashImages.length; i++) {
-    image(trashImages[i], trashPositions[i].x, trashPositions[i].y, trashSize, trashSize);
-  }
+    for (let i = 0; i < trashImages.length; i++) {
+        image(trashImages[i], trashPositions[i].x, trashPositions[i].y, trashSize, trashSize);
+    }
 
      // Use the user's mouse position to display the hand image
      image(handImage, mouseX, mouseY, 100, 100);
+
+
+     if (trashImages.length === 0) {
+        // Transition to the "ending" state
+        state = "ending";
+    }
 }  
 
+
+function mousePressed() {
+    if (state === "cleaning" && !isDraggingTrash) {
+        // Check if the mouse is over a trash item
+        for (let i = 0; i < trashPositions.length; i++) {
+            let trash = trashPositions[i];
+            if (
+                mouseX > trash.x &&
+                mouseX < trash.x + trashSize &&
+                mouseY > trash.y &&
+                mouseY < trash.y + trashSize
+            ) {
+                isDraggingTrash = true;
+                draggedTrashIndex = i;
+                break;
+            }
+        }
+    }
+}
+
+function mouseReleased() {
+    if (isDraggingTrash) {
+        // Check if the dragged trash is over the bin
+        if (
+            mouseX > 80 &&
+            mouseX < 280 &&
+            mouseY > 360 &&
+            mouseY < 560
+        ) {
+            // Remove the trash item from the array
+            trashImages.splice(draggedTrashIndex, 1);
+            trashPositions.splice(draggedTrashIndex, 1);
+        }
+        isDraggingTrash = false;
+        draggedTrashIndex = -1;
+    }
+}
+
+function ending() {
+    // Display the ending screen
+    background(161, 199, 129);
+    textSize(30);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    text("Congratulations! You just learnt how to clean up the environment!", width / 2, height / 2);
+}
 
 function planting() {
     // Draw the planting background image as the background
     image(plantingBackground, 0, 0, width, height);
-  };
+  }
