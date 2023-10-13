@@ -281,6 +281,16 @@ function cleaningEnding() {
     text("Congratulations! You just learnt how to clean up the environment!", width / 2, height / 2);
 }
 
+
+function keyPressed() {
+    if (keyCode === ENTER && state === "planting") {
+      // Set the flag to indicate Enter has been pressed
+      enterPressed = true;
+    }
+  }
+
+  
+  
 function planting() {
  
     // Draw the planting background image as the background
