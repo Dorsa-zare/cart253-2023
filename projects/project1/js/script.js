@@ -10,6 +10,9 @@ let cleaningBackground;
 let plantingBackground;
 let image1;
 let image2;
+
+let cleaningInstructionImage;
+let startCleaningImage;
 let trashImages = []; // Array to store trash images
 let trashPositions = []; // Array to store trash positions
 let trashSize = 80; // Size of the trash images
@@ -35,7 +38,8 @@ function preload() {
     plantingBackground = loadImage("assets/images/garden.png"); // Load the planting background image
     image1 = loadImage("assets/images/optionone.png"); // Load the first image
     image2 = loadImage("assets/images/optiontwo.png"); // Load the second image
-   
+    cleaningInstructionImage = loadImage("assets/images/cleaninginstruction.png");
+    startCleaningImage = loadImage("assets/images/startCleaning.png");
     binImage = loadImage("assets/images/bin.png"); // Load the bin image)
     handImage = loadImage("assets/images/hand.png");  // Load the hand image
    
@@ -91,6 +95,8 @@ function draw() {
         menu();
       } else if (state === "cleaning") {
         cleaning();
+     } else if (state === "cleaningInstruction") {
+        cleaningInstruction();
       } else if (state === "planting") {
         planting();
       } else if (state === "cleaningEnding") {
@@ -192,12 +198,36 @@ function draw() {
         if (keyIsPressed) {
           if (key === '1') {
             // Transition to the "cleaning" state for cleaning garbage
-            state = "cleaning";
+            state = "cleaningInstruction";
           } else if (key === '2') {
             // Transition to the "planting" state for planting trees
-            state = "planting";
+            state = "plantingInstruction";
           }
         }
+      }
+
+      function cleaningInstruction() {
+        background(255); // Set the background to white 
+        image(cleaningInstructionImage, 0, 0, width, height); // Display the instruction image
+    
+        //Cleaning instructions
+        textSize(30);
+        fill(70, 110, 80);
+        textAlign(CENTER, CENTER);
+        text(` Use your mouse to pick up each piece of
+        garbage you find on the beach and 
+        place it into the garbage bin.`, width / 2 + 120 , height / 2 - 50 );
+
+
+        // Text for the bottom
+        textSize(25);
+        fill(70, 110, 80);
+        textAlign(CENTER, CENTER);
+        text("Click here to start > ",   width / 2 + 120 , height / 2 + 200 );
+
+        // Display the start image
+        image(startCleaningImage, width / 2 + 240 , height / 2 + 140, 120, 120); 
+
       }
 
 
@@ -205,7 +235,6 @@ function draw() {
     
     // Clear the background to remove the previous frames
     background(cleaningBackground);
-
 
     // Hide the default cursor
     noCursor();
