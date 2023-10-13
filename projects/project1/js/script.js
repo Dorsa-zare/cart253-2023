@@ -22,9 +22,11 @@ let handImage;
 let isDraggingTrash = false;
 let draggedTrashIndex = -1;
 
+let plantingInstructionImage;
+let startPlantingImage;
 let plantImage; 
 let plantedPlants = []; // Array to store plant positions
-let plantingInstruction = "Whenever you're done planting, press Enter.";
+let plantingText = "Whenever you're done planting, press Enter.";
 let enterPressed = false;
 
 "use strict";
@@ -39,7 +41,7 @@ function preload() {
     image1 = loadImage("assets/images/optionone.png"); // Load the first image
     image2 = loadImage("assets/images/optiontwo.png"); // Load the second image
     cleaningInstructionImage = loadImage("assets/images/cleaninginstruction.png");
-    startCleaningImage = loadImage("assets/images/startCleaning.png");
+    startCleaningImage = loadImage("assets/images/startcleaning.png");
     binImage = loadImage("assets/images/bin.png"); // Load the bin image)
     handImage = loadImage("assets/images/hand.png");  // Load the hand image
    
@@ -66,6 +68,10 @@ function preload() {
     trashImages.push(loadImage("assets/images/trash7.png"));
     trashPositions.push({ x: 1050, y: 250 });
 
+
+
+    plantingInstructionImage = loadImage("assets/images/plantinginstruction.png");
+    startPlantingImage = loadImage("assets/images/startplanting.png");
 
      // Load the image of a plant
      plantImage = loadImage("assets/images/plant.png");
@@ -97,6 +103,8 @@ function draw() {
         cleaning();
      } else if (state === "cleaningInstruction") {
         cleaningInstruction();
+    } else if (state === "plantingInstruction") {
+        plantingInstruction();
       } else if (state === "planting") {
         planting();
       } else if (state === "cleaningEnding") {
@@ -226,7 +234,12 @@ function draw() {
         text("Click here to start > ",   width / 2 + 120 , height / 2 + 200 );
 
         // Display the start image
-        image(startCleaningImage, width / 2 + 240 , height / 2 + 140, 120, 120); 
+        image(startCleaningImage, width / 2 + 240 , height / 2 + 120, 150, 150); 
+
+         // Check if the user has clicked on the "Start Cleaning" image
+        if (mouseIsPressed && mouseX > width / 2 + 240 && mouseX < width / 2 + 390 && mouseY > height / 2 + 120 && mouseY < height / 2 + 270) {
+            state = "cleaning"; // Transition to the "cleaning" state
+    }
 
       }
 
@@ -319,7 +332,36 @@ function keyPressed() {
   }
 
   
-  
+  function plantingInstruction() {
+    background(255); // Set the background to white 
+    image(plantingInstructionImage, 0, 0, width, height); // Display the instruction image
+
+    //planting instructions
+    textSize(30);
+    fill(255);
+    textAlign(CENTER, CENTER);
+    text(` Use your mouse to pick up each piece of
+    garbage you find on the beach and 
+    place it into the garbage bin.`, width / 2 + 120 , height / 2 - 50 );
+
+
+    // Text for the bottom
+    textSize(25);
+    fill(70, 110, 80);
+    textAlign(CENTER, CENTER);
+    text("Click here to start > ",   width / 2 + 120 , height / 2 + 200 );
+
+    // Display the start image
+    image(startPlantingImage, width / 2 + 240 , height / 2 + 120, 150, 150); 
+
+     // Check if the user has clicked on the "Start Cleaning" image
+    if (mouseIsPressed && mouseX > width / 2 + 240 && mouseX < width / 2 + 390 && mouseY > height / 2 + 120 && mouseY < height / 2 + 270) {
+        state = "planting"; // Transition to the "planting" state
+}
+
+  }
+
+
 function planting() {
  
     // Draw the planting background image as the background
@@ -327,9 +369,9 @@ function planting() {
 
     // Draw the planting instruction at the top center of the screen
   textSize(20);
-  fill(255);
+  fill(70, 110, 80);
   textAlign(CENTER, CENTER);
-  text(plantingInstruction, width / 2, 30);
+  text(plantingText, width / 2, 30);
 
     // Draw the plant image at the current mouse position
     image(plantImage, mouseX - plantImage.width / 2 + 190 , mouseY - plantImage.height / 2 + 190 , 100, 100);
