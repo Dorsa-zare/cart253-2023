@@ -19,6 +19,10 @@ let handImage;
 let isDraggingTrash = false;
 let draggedTrashIndex = -1;
 
+let plantImage; 
+let plantedPlants = []; // Array to store plant positions
+let plantingInstruction = "Whenever you're done planting, press Enter.";
+let enterPressed = false;
 
 "use strict";
 
@@ -57,6 +61,11 @@ function preload() {
     //Trash7 image and its position
     trashImages.push(loadImage("assets/images/trash7.png"));
     trashPositions.push({ x: 1050, y: 250 });
+
+
+     // Load the image of a plant
+     plantImage = loadImage("assets/images/plant.png");
+
   }
 
 
@@ -84,8 +93,10 @@ function draw() {
         cleaning();
       } else if (state === "planting") {
         planting();
-      } else if (state === "ending") {
-        ending();
+      } else if (state === "cleaningEnding") {
+        cleaningEnding();
+      } else if (state === "plantingEnding") {
+        plantingEnding();
     }
 }
 
@@ -219,7 +230,7 @@ function draw() {
 
      if (trashImages.length === 0) {
         // Transition to the "ending" state
-        state = "ending";
+        state = "cleaningEnding";
     }
 }  
 
@@ -261,7 +272,7 @@ function mouseReleased() {
     }
 }
 
-function ending() {
+function cleaningEnding() {
     // Display the ending screen
     background(161, 199, 129);
     textSize(30);
@@ -271,6 +282,40 @@ function ending() {
 }
 
 function planting() {
+ 
     // Draw the planting background image as the background
     image(plantingBackground, 0, 0, width, height);
+
+    // Draw the planting instruction at the top center of the screen
+  textSize(20);
+  fill(255);
+  textAlign(CENTER, CENTER);
+  text(plantingInstruction, width / 2, 30);
+
+    // Draw the plant image at the current mouse position
+    image(plantImage, mouseX - plantImage.width / 2 + 190 , mouseY - plantImage.height / 2 + 190 , 100, 100);
+  
+  if (mouseIsPressed) {
+    // Add the current mouse position to an array
+    plantedPlants.push({ x: mouseX, y: mouseY });
+  }
+
+  if (enterPressed) {
+    // Transition to the "plantingEnding" state when Enter is pressed
+    state = "plantingEnding";
+  }
+  
+  // Loop through the array of plant positions and draw the plant image at each position
+  for (let plantPosition of plantedPlants) {
+    image(plantImage, plantPosition.x - plantImage.width / 2 + 190, plantPosition.y - plantImage.height / 2 + 190, 100, 100);
+  }
+  }
+
+  function plantingEnding () {
+       // Display the ending screen
+       background(161, 199, 129);
+       textSize(30);
+       fill(255);
+       textAlign(CENTER, CENTER);
+       text(" Did you know if you plant actual plants you can actually help the environment? ", width / 2, height / 2);
   }
