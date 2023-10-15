@@ -2,15 +2,24 @@
  * Project 1
  * Dorsa zare
  * 
- * Make title page pretty
- * Make ending pages Pretty
- * Organize sodes
- * Rewrite the texts 
+ 
+ * Organize codes
  * Fix offset for cleaning simulation
+  when restarting cant play the same game 
+ * fix plant drawing per frame
  * 
  * 
  */
+
 let state = "title";
+// Variables related to title
+let sadEarthImage;
+let titleTextImage;
+
+// Variables related to menu
+let cleanGarbageImage;
+let plantTreesImage;
+
 
 // Variables related to cleaning
 let cleaningBackground;
@@ -64,11 +73,17 @@ function preload() {
      // Load background images
     cleaningBackground = loadImage("assets/images/beach.png"); // Load the cleaning background image
     plantingBackground = loadImage("assets/images/garden.png"); // Load the planting background image
+
+     // Load title page images
+     sadEarthImage = loadImage("assets/images/sadearth.png") // Load the sad earth image
+     titleTextImage = loadImage("assets/images/titletext.png") // Load the title image
     
      // Load menu images
     image1 = loadImage("assets/images/optionone.png"); // Load the first image
     image2 = loadImage("assets/images/optiontwo.png"); // Load the second image
-   
+    cleanGarbageImage = loadImage("assets/images/cleangarbage.png"); // Load the clean garbage text image
+    plantTreesImage = loadImage("assets/images/planttrees.png"); // Load the plant trees text image
+
     // Load cleaning-related images
     cleaningInstructionImage = loadImage("assets/images/cleaninginstruction.png");
     startCleaningImage = loadImage("assets/images/startcleaning.png");
@@ -148,25 +163,26 @@ function draw() {
         drawTitleText();
         drawStartPrompt();
         checkKeyPressToMenu();
+        displayTitleImage();
       }
 
 
       function drawTitleText() {
-        push();
-        textSize(60);
-        fill(70, 110, 80);
-        textAlign(CENTER, CENTER);
-        text(" Save the environment! ", width / 2, height / 2 - 30);
-        pop();
+        image(titleTextImage, width /2 - 200 , height /2 - 250 ); 
       }
       
       function drawStartPrompt() {
         push();
-        textSize(25);
+        textSize(30);
         fill(255);
         textAlign(CENTER, CENTER);
-        text("Press Spacebar to start", width / 2, height / 2 + 80);
+        text("Press Spacebar to start", width / 2 + 140 , height / 2 + 130);
         pop();
+      }
+
+
+      function displayTitleImage() {
+        image(sadEarthImage, 60 , 230, 350, 350); 
       }
 
        function checkKeyPressToMenu() {
@@ -183,7 +199,7 @@ function draw() {
 
       function displayMenu() {
         displayMenuImages(); // Display menu options with images above
-        displayMenuOptions(); // Display menu options
+        displayMenuTitle(); // Display menu options
         displayMenuGuide (); // Display menu guide
         checkMenuSelection();  // Check for user input to select an option
       }
@@ -191,45 +207,24 @@ function draw() {
       function displayMenuImages() {
         image(image1, width / 2 - 300, height / 2 - 100, 200, 200);  // Load and display the first image above the left option
         image(image2, width / 2 + 100, height / 2 - 100, 200, 200); // Load and display the second image above the right option
+        textAlign(CENTER)
+        image(cleanGarbageImage, width / 2 - 470 , height / 2 - 10 , 500, 270 ); // Load and display the right option
+        image(plantTreesImage, width / 2 - 70 , height / 2 - 10 , 500, 270 ); // Load and display the right option
       }
 
-      function displayMenuOptions() {
-        let rectWidth = 260;
-        let rectHeight = 65;
-        let spacing = 130; // Spacing between the boxes
-        let leftX = width / 2 - rectWidth - spacing / 2;   // Calculate the x-coordinates for the left and right boxes
-        let rightX = width / 2 + spacing / 2;
-        let boxY = height / 2 + 120;  // Calculate the y-coordinate for the boxes (lower position)
-
-       displayMenueTitle ();
-
-        // Draw the left rectangle box
-        fill(255);
-        rect(leftX, boxY, rectWidth, rectHeight, 10);
-        // Draw the right rectangle box
-        rect(rightX, boxY, rectWidth, rectHeight, 10);
-        // Text for the left option
-        textSize(25);
-        fill(100, 130, 100);
-        textAlign(CENTER, CENTER);
-        text("1. Clean Garbage", leftX + rectWidth / 2, boxY + rectHeight / 2);
-        // Text for the right option
-        text("2. Plant Trees",  rightX + rectWidth / 2, boxY + rectHeight / 2);
-      }
-
-
-    function displayMenueTitle () {
+      function displayMenuTitle() {
         // Title
         textSize(35);
-        fill(255);
+        fill(50);
         textAlign(CENTER, CENTER);
         text("How are you going to save the environment today?", width / 2, height / 2 - 170);
-    }
+        }
+
 
     function displayMenuGuide () {
           // Guide
-          textSize(20);
-          fill(70, 110, 80);
+          textSize(25);
+          fill(255);
           textAlign(CENTER, CENTER);
           text("Press 1 or 2 on your keyboard to confirm your choice ", width / 2, height / 2 + 230);
       }
@@ -258,12 +253,14 @@ function draw() {
 
       
      function displayCleaningInstructions() {
-        textSize(30);
-        fill(70, 110, 80);
+        textSize(28);
+        fill(70);
         textAlign(CENTER, CENTER);
-        text(` Use your mouse to pick up each piece of
-        garbage you find on the beach and 
-        place it into the garbage bin.`, width / 2 + 120 , height / 2 - 50 );
+        text(` Use your mouse to click and drag each piece of 
+        garbage on the beach, then release it into the bin.
+         Your goal is to clean up the beach. 
+         When you've removed all the trash, 
+         you'll be making a positive impact on the environment.`, width / 2 + 120 , height / 2 - 50 );
     }
 
     function displayStartCleaningButton() {
@@ -368,10 +365,23 @@ function mouseReleased() {
 function cleaningEnding() {
     // Display the ending screen
     background(161, 199, 129);
-    textSize(30);
+    textSize(50);
     fill(255);
     textAlign(CENTER, CENTER);
-    text("Congratulations! You just learnt how to clean up the environment!", width / 2, height / 2);
+    text(`Congratulations!`, width / 2, height / 2 - 100 );
+
+    textSize(30);
+    fill(70);
+    text(`You've become a pro at cleaning up, right here in our virtual world.
+      Now, take those skills and make the real environment sparkle too!
+      You've got this!`, width / 2, height / 2 + 50);
+
+      fill(255);
+      text("Press 'R' to restart the game.", width / 2, height / 2 + 170);
+   
+      if (keyIsPressed && key === 'r') {
+          state = "title"; // Transition back to the title page
+      }
 }
 
 
@@ -389,11 +399,12 @@ function keyPressed() {
 
     //planting instructions
     textSize(30);
-    fill(255);
+    fill(70);
     textAlign(CENTER, CENTER);
-    text(` Use your mouse to pick up each piece of
-    garbage you find on the beach and 
-    place it into the garbage bin.`, width / 2 + 120 , height / 2 - 50 );
+    text(` Just click in the garden to plant your trees,
+     and they'll be watered automatically. 
+    Your mission is to create a thriving green space,
+     making the world a better place one tree at a time. `, width / 2 + 120 , height / 2 - 70 );
 
 
     // Text for the bottom
@@ -469,10 +480,25 @@ function planting() {
   }
 
   function plantingEnding () {
-       // Display the ending screen
-       background(161, 199, 129);
-       textSize(30);
-       fill(255);
-       textAlign(CENTER, CENTER);
-       text(" Did you know if you plant actual plants you can actually help the environment? ", width / 2, height / 2);
+ // Display the ending screen
+ background(161, 199, 129);
+ textSize(50);
+ fill(255);
+ textAlign(CENTER, CENTER);
+ text(`Congratulations!`, width / 2, height / 2 - 100 );
+
+ textSize(30);
+ fill(70);
+ text(` You've become a tree-planting pro right here in our virtual garden.
+  Now, take your skills and make the real world greener.
+  Get out there and plant some trees, as our planet could use your green touch!
+   `, width / 2, height / 2 + 50);
+
+
+   fill(255);
+   text("Press 'R' to restart the game.", width / 2, height / 2 + 150);
+
+   if (keyIsPressed && key === 'r') {
+       state = "title"; // Transition back to the title page
+   }
   }
