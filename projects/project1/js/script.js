@@ -292,10 +292,9 @@ function draw() {
         image(trashImages[i], trashPositions[i].x-trashSize/2, trashPositions[i].y-trashSize/2, trashSize, trashSize);
     }
      // Use the user's mouse position to display the hand image
-     image(handImage, mouseX-50, mouseY-50, 100, 100);
+     image(handImage, mouseX-40, mouseY-40, 70, 70);
 
      displayBird(); //Display and move the bird image
-
 
      if (trashImages.length === 0) {  // Transition to the "ending" state
         state = "cleaningEnding";
