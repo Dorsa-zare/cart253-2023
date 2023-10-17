@@ -1,10 +1,18 @@
 /**
- * Project 1
+ * 
+ * Project 1  "Save the Environment"
  * Dorsa zare
  * 
- * This is a game that will help you practice your skills for saving the environment. 
+ * "Save the Environment" is a fun simulation game designed to show you just how easy it is to make a positive impact on our planet.
+ *  With interactive challenges, you'll learn and practice simple actions that help preserve our environment.
+ *  The game features original graphics and images created by myself, adding a personal touch to your journey.
+    In the game, you'll be tasked with various environmental challenges, such as cleaning up trash from a beach or planting trees in a garden.
+    By clicking, dragging, and releasing, you can easily pick up trash or plant trees.
+    The game is designed to be both enjoyable and educational, teaching you how small actions can have a big impact.
+ * 
  * 
  */
+
 
 let state = "title";
 // Variables related to title
