@@ -8,23 +8,27 @@
 "use strict";
 
 let bugs = [];
-let maxBugs = 10;
+let maxBugs = 15;
 let sprayImage;
-let bugImage;
+let bugImages = [];
 let lastBugTime = 0;
-let bugInterval = 60; // Create a new bug every 3 seconds (60 frames per second * 3 seconds)
-
-let gameState = "playing"; // Initialize the game state
+let bugInterval = 60; // Create a new bug every second
+let gameState = "title"; // Initialize the game state
 let killedBugs = 0; // Initialize the number of killed bugs
 let bugCreationAllowed = true; // Initialize bug creation as allowed
+let bugSprayed = false; // Flag to track if a bug has been sprayed
 
 
 /**
- * Description of preload
+ * Loading images of THE spray and the bug
 */
 function preload() {
     sprayImage = loadImage('assets/images/spray.png');
-    bugImage = loadImage('assets/images/bug1.png');
+    bugImages[0] = loadImage('assets/images/bug1.png');
+    bugImages[1] = loadImage('assets/images/bug2.png');
+    bugImages[2] = loadImage('assets/images/bug3.png');
+    bugImages[3] = loadImage('assets/images/bug4.png');
+    bugImages[4] = loadImage('assets/images/bug5.png');
 }
 
 let spray = {
@@ -34,48 +38,80 @@ let spray = {
 };
 
 /**
- * Description of setup
+ * Creating canvas
 */
 function setup() {
     createCanvas(600, 600);
-
-    // for (let i = 0; i < schoolSize; i++) {
-    //     school[i] = createBug(random(0, width), random(0, height));
-    //   }
-
 }
 
-//Create bug (x,y)
-function createBug(x, y) {
+
+function createBug(x, y, size) {
+    let bugSize = random(20, 80); // Random size between 20 and 80
     let bug = {
         x: x,
         y: y,
-        size: 50,
+        size: bugSize,
         vx: 0,
         vy: 0,
-        speed: 2
+        speed: 2,
+        image:random(bugImages), //Assign a random bug image
+        sprayed: false, // Flag to track if the bug has been sprayed
     };
     return bug;
 }
 
 /**
- * Description of draw()
+ * Displaying all the states
 */
 function draw() {
+    background(0);
+
+    if (gameState === "title") {
+        title();
+    } else if (gameState === "playing") {
+        playing();
+    } else if (gameState === "win") {
+        win();
+    } else if (gameState === "gameover") {
+        gameover();
+    }
+}
+
+function title() {
+    background(0); 
+    displayTitletext(); //Display the title page texts
+    if (mouseIsPressed) { // Check if mouse is pressed move to playing state
+        gameState = "playing";
+    }
+}
+
+function displayTitletext() { // The title page text
+    textSize(25); 
+    fill(255, 0, 0);
+    text("Click on each bug with your mouse to spray them", width / 2 - 270, height / 2 - 50);
+    text("Press mouse to start", width / 2 - 120, height / 2 + 50);
+}
+
+
+function playing() {
     background(0);
 
     // Update the spray's position to follow the mouse
     spray.x = mouseX;
     spray.y = mouseY;
-    // Display the spray
-    image(sprayImage, spray.x, spray.y, spray.size, spray.size);
+    
+    displaySpray(); // Display the spray
 
     for (let i = 0; i < bugs.length; i++) {
         moveBug(bugs[i]);
         displayBug(bugs[i]);
     }    
 
-    // Check for game ending conditions
+    checkForEnding(); //Check for ending of the game
+}
+
+
+function checkForEnding() { // Check for game ending conditions
     if (killedBugs === maxBugs) {
         gameState = "win"; // All bugs are killed
         bugCreationAllowed = false; // Stop bug creation
@@ -83,107 +119,135 @@ function draw() {
         gameState = "gameover"; // Maximum number of bugs on the canvas
     }
 
-    // Display game endings
-    if (gameState === "win") {
-        // Winning ending
-        textSize(32);
-        fill(255, 0, 0);
-        text("Congratulations! You won!", width / 2 - 180, height / 2);
-    } else if (gameState === "gameover") {
-        // Game Over ending
-        textSize(50);
-        fill(255, 0, 0);
-        text("Game over!", width / 2 - 100, height / 2);
-    }
-
-    // Bug creation (only if bugCreationAllowed is true)
     if (bugCreationAllowed && frameCount - lastBugTime >= bugInterval && bugs.length < maxBugs) {
         let newBug = createBug(random(0, width), random(0, height));
         bugs.push(newBug);
         lastBugTime = frameCount;
     }
- }
-
-function moveBug(bug) {
-
-      // Calculate the distance between the bug and the spray
-      let distanceToSpray = dist(bug.x, bug.y, spray.x, spray.y);
-
-     // Check if the distance is smaller than the spray size (adjust this value as needed)
-     if (distanceToSpray < spray.size) {
-        // Calculate the direction from the bug to the spray
-        let direction = calculateDirectionFromBugToSpray(bug, spray);
-
-        // Adjust the bug's velocity based on the direction
-        bug.vx += direction.dx * bug.speed;
-        bug.vy += direction.dy * bug.speed;
-
-        // Limit the bug's speed to avoid excessive acceleration
-        let bugSpeed = dist(0, 0, bug.vx, bug.vy);
-         if (bugSpeed > bug.speed) {
-            let ratio = bug.speed / bugSpeed;
-            bug.vx *= ratio;
-            bug.vy *= ratio;
-          }
- }
-
-  // Move the bug
-  bug.x = bug.x + bug.vx;
-  bug.y = bug.y + bug.vy;
-
-  // Constrain the bug
-  bug.x = constrain(bug.x, 0, width);
-  bug.y = constrain(bug.y, 0, height);
-
 }
 
-// Display Bug (bug)
- function displayBug(bug) {
-     push();
-    // fill(200, 100, 100);
-    //  noStroke();
-    //  ellipse(bug.x, bug.y, bug.size);
-    image(bugImage, bug.x, bug.y, bug.size, bug.size);
-     pop();
+function win() { //State for when the user has won
+    background(0);
+    textSize(32);
+    fill(255, 0, 0);
+    text("Congratulations! You won!", width / 2 - 180, height / 2);
+}
+
+function gameover() { //State for when the user has lost
+    background(0);
+    textSize(40);
+    fill(255, 0, 0);
+    text("Game over!", width / 2 - 120, height / 2);
+}
+
+function moveBug(bug) {
+    adjustBugVelocity(bug);
+    updateBugPosition(bug);
+    constrainBug(bug);
  }
 
 
-function displaySpray() {
+function adjustBugVelocity(bug) {
+    // Calculate the distance between the bug and the spray
+    let distanceToSpray = dist(bug.x, bug.y, spray.x, spray.y);
+    // Check if the distance is smaller than the spray size (adjust this value as needed)
+    if (distanceToSpray < spray.size) {
+    // Calculate the direction from the bug to the spray
+    let direction = calculateDirectionFromBugToSpray(bug, spray);
+    // Adjust the bug's velocity based on the direction
+    bug.vx += direction.dx * bug.speed;
+    bug.vy += direction.dy * bug.speed;
+
+    limitBugSpeed(bug);
+ }
+}
+
+function updateBugPosition(bug) {
+    // Move the bug
+    bug.x = bug.x + bug.vx;
+    bug.y = bug.y + bug.vy;
+}
+
+function constrainBug(bug) { 
+    // Constrain the bug  
+    bug.x = constrain(bug.x, 0, width);
+    bug.y = constrain(bug.y, 0, height);
+}
+
+function limitBugSpeed(bug){
+     // Limit the bug's speed to avoid excessive acceleration
+     let bugSpeed = dist(0, 0, bug.vx, bug.vy);
+     if (bugSpeed > bug.speed) {
+   let ratio = bug.speed / bugSpeed;
+    bug.vx *= ratio;
+    bug.vy *= ratio;
+     }
+}
+
+
+ function displayBug(bug) { //display the bug image
+    push();
+    image(bug.image, bug.x, bug.y, bug.size, bug.size); 
+    pop();
+}
+
+
+function displaySpray() { //display the spray image
     image(sprayImage, spray.x, spray.y, spray.size, spray.size);
 }
 
 function calculateDirectionFromBugToSpray(bug, spray) {
- // Calculate the vector from the bug to the spray
- let dx = spray.x - bug.x;
- let dy = spray.y - bug.y;
+    // Calculate the vector from the bug to the spray
+    let dx = spray.x - bug.x;
+    let dy = spray.y - bug.y;
+    // Calculate the distance between the bug and the spray
+    let distance = dist(bug.x, bug.y, spray.x, spray.y);
+    // Normalize the direction to have a magnitude of 1
+    if (distance > 0) {
+        dx /= distance;
+        dy /= distance;
+    }
+    // Invert the direction 
+    dx *= -1;
+    dy *= -1;
 
- // Calculate the distance between the bug and the spray
- let distance = dist(bug.x, bug.y, spray.x, spray.y);
-
- // Normalize the direction vector to have a magnitude of 1
- if (distance > 0) {
-     dx /= distance;
-     dy /= distance;
- }
-
- // Invert the direction vector
- dx *= -1;
- dy *= -1;
-
- return { dx, dy };
+    return { dx, dy };
 }
 
-
 function mousePressed() {
-    // Check if the mouse click touches any bug
+  checkIfMouseTouchesBug();  // Check if the mouse click touches any bug
+  changeRemainingBugsImage();
+}
+
+function changeRemainingBugsImage() {
+  if (bugSprayed) { // Change the images of the remaining bugs to bug1(red)
+  for (let i = 0; i < bugs.length; i++) {
+     if (!bugs[i].sprayed) {
+         bugs[i].image = bugImages[0];
+         }
+     }
+    bugSprayed = false; // Reset the bug sprayed flag
+  }
+}
+
+function checkIfMouseTouchesBug() {
     for (let i = bugs.length - 1; i >= 0; i--) {
         let bug = bugs[i];
         let distanceToBug = dist(spray.x, spray.y, bug.x, bug.y);
         
         if (distanceToBug < spray.size / 2) {
-            // Remove the bug from the array
-            bugs.splice(i, 1);
-            killedBugs++; // Increment the killed bugs count
+            removeBug(i);  // Remove the bug from the array
         }
+    }
+}
+
+function removeBug(index) {
+    bugs.splice(index, 1);
+    killedBugs++;
+    bugSprayed = true;
+
+    if (killedBugs === maxBugs) {
+        gameState = "win";
+        bugCreationAllowed = false;
     }
 }
