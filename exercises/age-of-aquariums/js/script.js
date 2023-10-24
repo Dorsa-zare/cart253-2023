@@ -1,7 +1,12 @@
 /**
- * Age of Aquariums 
+ * Age of Aquarium Exercise 
  * Dorsa Zare
  * 
+ * This is a bug-spraying simulation game.
+ * You are armed with a powerful bug spray and your task is to click on each bug using your mouse to eliminate them. 
+ * These bugs come in a variety of colors and sizes. You need to spray all the bugs to win. 
+ * But if more than 15 bugs are alive together, they'll take over, and you'll lose.  
+ *  When you spray one bug, it startles the others, causing them to transform into red bugs. 
  * 
  */
 
