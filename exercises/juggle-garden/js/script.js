@@ -7,12 +7,13 @@
 
 "use strict";
 
+
 // Our garden
 let garden = {
     // An array to store the individual flowers
     flowers: [],
     // How many flowers in the garden
-    numFlowers: 50,
+    numFlowers: 20,
      // An array of bees
      bees: [],
     // How many bees in the garden
@@ -24,6 +25,9 @@ let garden = {
       b: 120
     }
   };
+
+  // Variable for water
+  let water; 
 
   
 /**
@@ -62,6 +66,9 @@ function setup() {
         let bee = new Bee(random(0,width),random(0,height));
         garden.bees.push(bee);  
     }
+
+       // Create the water object
+       water = new Water();
   }
   
    
@@ -95,5 +102,16 @@ for (let i = 0; i < garden.flowers.length; i++) {
             bee.tryToPollinate(flower);
         }
     }
+  }
+
+  // Display and move the water object
+  water.move();
+  water.display();
+
+}
+
+function mousePressed() {
+  for (let i = 0; i < garden.flowers.length; i++) {
+      garden.flowers[i].mousePressed();
   }
 }
