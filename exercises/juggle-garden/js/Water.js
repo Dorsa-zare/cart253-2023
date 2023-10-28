@@ -18,7 +18,14 @@ class Water {
       }
     }
   
-    
+    tryToHydrate(flower) {
+        let d = dist(this.x, this.y, flower.x, flower.y);
+        if (d < this.size / 2 + flower.size / 2 + flower.petalThickness) {
+          this.grow();
+          flower.hydrate();
+        }
+      }
+
     display() {
       image(this.image, this.x, this.y, this.size, this.size);
     }

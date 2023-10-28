@@ -16,10 +16,14 @@ class Flower {
     this.petalColor = petalColor;
     this.centreColor = {
       r: 250,
-      g: 200,
-      b: 200
+      g: 220,
+      b: 0
     };
     this.alive = true;
+  }
+
+  resetSize() {
+    this.size = this.maxSize;
   }
 
   shrink() {
@@ -32,15 +36,24 @@ class Flower {
     }
   }
 
-  pollinate() {
-    let growth = random(0, 0.5);
+  hydrated() {
+    let growth = random(10, 15);
     this.size += growth;
-    this.petalThickness += growth / 10;
-
+    this.petalThickness += growth / 5;
+    
     this.size = constrain(this.size, 0, this.maxSize);
     this.petalThickness = constrain(this.petalThickness, 0, this.maxPetalThickness);
   }
 
+  grow() {
+    let growth = random(10, 15);
+    this.size += growth;
+    this.petalThickness += growth / 5;
+
+    this.size = constrain(this.size, 0, this.maxSize);
+    this.petalThickness = constrain(this.petalThickness, 0, this.maxPetalThickness);
+  }
+  
   display() {
     push();
     strokeWeight(this.stemThickness);

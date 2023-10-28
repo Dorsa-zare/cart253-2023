@@ -1,4 +1,4 @@
-class Bee {
+class Bat {
 
     // constructor() sets up our starting properties
     constructor(x, y) {
@@ -10,13 +10,13 @@ class Bee {
       this.vx = 0;
       this.vy = 0;
       this.speed = 5;
-      this.shrinkRate = 0.05; // How much smaller we get each frame
+      this.shrinkRate = 0.03; // How much smaller we get each frame
       this.growRate = 0.05;
-      this.jitteriness = 0.1; // How likely the bee is to change direction
-      this.alive = true; // The Bee starts out alive!
+      this.jitteriness = 0.1; // How likely the bat is to change direction
+      this.alive = true; // The bat starts out alive!
     }
   
-    // shrink() causes the bee to get smaller over time
+    // shrink() causes the bat to get smaller over time
     shrink() {
       // Shrink by reducing the size by a set amount
       this.size = this.size - this.shrinkRate;
@@ -27,11 +27,11 @@ class Bee {
       }
     }
   
-    tryToPollinate(flower) {
+    tryToEatFlower(flower) {
         let d = dist(this.x,this.y,flower.x,flower.y);
         if (d < this.size/2 + flower.size/2 + flower.petalThickness) {
             this.grow();
-            flower.pollinate();
+            flower.shrink();
         }
     }
 
@@ -41,7 +41,7 @@ class Bee {
         this.size = constrain(this.size, this.minSize, this.maxSize);
     }    
 
-    // move() moves the bee by potentially changing direction
+    // move() moves the bat by potentially changing direction
     // and then changing position based on velocity
     move() {
       // First check if we should change direction
@@ -60,11 +60,11 @@ class Bee {
       this.y = constrain(this.y, 0, height);
     }
   
-    // display() draws our bee onto the canvas
+    // display() draws our bat onto the canvas
     display() {
       push();
       // Wings on either side
-      fill(255, 255, 255);
+      fill(0);
       noStroke();
       ellipse(this.x - this.size / 2, this.y, this.size / 2);
       ellipse(this.x + this.size / 2, this.y, this.size / 2);
@@ -72,7 +72,7 @@ class Bee {
   
       // Body
       push();
-      fill(225, 225, 50);
+      fill(100);
       noStroke();
       ellipse(this.x, this.y, this.size);
       pop();
