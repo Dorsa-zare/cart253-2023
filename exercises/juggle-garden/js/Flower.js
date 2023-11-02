@@ -36,15 +36,33 @@ class Flower {
     }
   }
 
+
   hydrated() {
     let growth = random(10, 15);
     this.size += growth;
     this.petalThickness += growth / 5;
-    
-    this.size = constrain(this.size, 0, this.maxSize);
+  
+    this.size = constrain(this.size, 0, this.maxSize); // Fixed the case of maxsize
     this.petalThickness = constrain(this.petalThickness, 0, this.maxPetalThickness);
   }
+  
+  changeMiddleColor() {
+    // Change the middle color of the flower
+    this.centreColor = {
+      r: random(50, 150),
+      g: random(220, 255),
+      b: random(50, 100),
+    };
+  }
 
+  resetMiddleColor() {
+    this.centreColor = {
+    r: 250,
+    g: 220,
+    b: 0
+  };
+  }
+  
   grow() {
     let growth = random(10, 15);
     this.size += growth;
@@ -53,7 +71,8 @@ class Flower {
     this.size = constrain(this.size, 0, this.maxSize);
     this.petalThickness = constrain(this.petalThickness, 0, this.maxPetalThickness);
   }
-  
+
+
   display() {
     push();
     strokeWeight(this.stemThickness);
@@ -67,15 +86,12 @@ class Flower {
     pop();
   }
 
+  mousePressed() {
+    let d = dist(this.x, this.y, mouseX, mouseY);
 
-mousePressed() {
-  let d = dist(this.x, this.y, mouseX, mouseY);
-
-  if (d < this.size / 2 + this.petalThickness) {
-    this.size = this.maxSize;
-    this.petalThickness = this.maxPetalThickness
+    if (d < this.size / 2 + this.petalThickness) {
+      this.size = this.maxSize;
+      this.petalThickness = this.maxPetalThickness;
+    }
   }
-}
-
-  
 }

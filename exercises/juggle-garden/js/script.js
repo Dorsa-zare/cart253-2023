@@ -2,8 +2,8 @@
  * Garden Simulation
  * Dorsa Zare
  * 
- * This is a game where the bats are trying to damage the flowers,
- *  and the player has to protect the flowers by clicking on them.
+This is a game where the bats are trying to damage the flowers, while the rain will make the flowers hydrated and green. 
+The player has to protect the flowers by clicking on them.
  */
 
 "use strict";
@@ -107,49 +107,59 @@ function title() {
 
  // The title page text
 function displayTitletext() {
-  textSize(30); 
+  textSize(25); 
   fill(0);
   text(`Click on each flower with your mouse 
-              to make them grow`, width / 2 - 250 , height / 2 - 50 );
+              to make them grow.`, width / 2 - 200 , height / 2 - 100 );
+  textSize(20); 
   fill(255);
-  text("Press mouse to start", width / 2 - 130, height / 2 + 80);
+  text(`The bats will try to damage your flowers but 
+  the rain will make them greener and hydrated.`, width / 2 - 200, height / 2 + 20 );            
+  fill(0);
+  text("Press mouse to start", width / 2 - 100 , height / 2 + 150);
 }
-
 
 
 function playing() {
-
   background(garden.grassColor.r, garden.grassColor.g, garden.grassColor.b);
 
-// Loop through all the flowers in the array and display them
-for (let i = 0; i < garden.flowers.length; i++) {
+  // Loop through all the flowers in the array and display them
+  for (let i = 0; i < garden.flowers.length; i++) {
     let flower = garden.flowers[i];
     if (flower.alive) {
-        flower.shrink();
-        flower.display();     
+      flower.shrink();
+      flower.display();
     }
   }
 
-  //Counts all the bats
+  // Loop through all the bats
   for (let i = 0; i < garden.bats.length; i++) {
     let bat = garden.bats[i];
     if (bat.alive) {
-        bat.shrink();
-        bat.move();
-        bat.display();
+      bat.shrink();
+      bat.move();
+      bat.display();
 
-        // Looks at all the flowers in the garden and tries to eat flower 
-        for (let j = 0; j < garden.flowers.length; j++) {
-            let flower = garden.flowers[j];
-            bat.tryToEatFlower(flower);
-        }
+      // Loop through all the flowers in the garden and try to eat flower
+      for (let j = 0; j < garden.flowers.length; j++) {
+        let flower = garden.flowers[j];
+        bat.tryToEatFlower(flower);
+      }
     }
   }
 
-  // Display and move the water object
+  // Move and display the water object
   water.move();
   water.display();
+
+  // Loop through all the water objects
+  for (let j = 0; j < garden.flowers.length; j++) {
+    water.tryToHydrate(garden.flowers[j]);
+  }
+
+  checkWinOrGameOver();
 }
+
 
 
 function checkWinOrGameOver() {

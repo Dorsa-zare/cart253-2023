@@ -32,6 +32,7 @@ class Bat {
         if (d < this.size/2 + flower.size/2 + flower.petalThickness) {
             this.grow();
             flower.shrink();
+            flower.resetMiddleColor();
         }
     }
 
