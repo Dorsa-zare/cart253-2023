@@ -8,13 +8,22 @@
 
 "use strict";
 
+let petImage1;
+let petImage2;
+let petImage3;
+let petImage4;
+
 let state = "title";
 
 /**
  * Description of preload
 */
 function preload() {
-
+    petImage1 = loadImage("assets/images/pet1.png");  
+    petImage2 = loadImage("assets/images/pet2.png");  
+    petImage3 = loadImage("assets/images/pet3.png");  
+    petImage4 = loadImage("assets/images/pet4.png");  
+  
 }
 
 
@@ -90,5 +99,32 @@ function draw() {
 
 
       function customizePet() {
+        background(180,200,150);
+        textSize(28);
+        textAlign(CENTER, CENTER);
+        fill(0);
+        text(` Choose your emotional support pet's look
+         to make it your own! `, width / 2, height / 2 - 200);
+   
+         displayPetImages();
+         
+        }
 
-      }
+            
+        function displayPetImages () {
+        // Display the pet images next to each other
+        image(petImage1, 140, height / 2 - 130, 300, 300);
+        image(petImage2, 400, height / 2 - 140, 320, 320);
+        image(petImage3, 620, height / 2 - 130, 300, 300);
+        image(petImage4, 850, height / 2 - 130, 300, 300);
+        
+        // Add a label for each pet image
+        textSize(18);
+        textAlign(CENTER, CENTER);
+        fill(0);
+        text("Pet 1", 340, height / 2 + 170);
+        text("Pet 2", 550, height / 2 + 170);
+        text("Pet 3", 770, height / 2 + 170);
+        text("Pet 4", 1000, height / 2 + 170);
+
+        }
