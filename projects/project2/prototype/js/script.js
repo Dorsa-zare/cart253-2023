@@ -8,15 +8,18 @@
 
 "use strict";
 
-let petImages = [];
-let chosenPet;
+let petImages = []; //The 4 images of the pets
+let chosenPet; //The pet that the user has chosen which will be showin in the next levels
 
-let state = "title";
+let state = "title"; //Starting the game in title state
+
 
 /**
  * Description of preload
 */
 function preload() {
+
+    //The images pf the pets
     for (let i = 1; i <= 4; i++) {
         petImages[i] = loadImage(`assets/images/pet${i}.png`);
     }
@@ -43,7 +46,10 @@ function draw() {
         customizePet();
     } else if (state === "hello") {
         hello();
+    } else if (state === "emotions") {
+        emotions();
     }
+
 }
 
 function title() {
@@ -62,15 +68,6 @@ function displayTitleText() {
     text("Press here to start", width / 2, height / 2 + 50);
 }
 
-function mousePressed() {
-    if (state === "title") {
-        state = "instruction";
-    } else if (state === "instruction") {
-        if (mouseY > height / 2 + 90) {
-            state = "customizePet";
-        }
-    }
-}
 
 function instruction() {
     background(180, 200, 150);
@@ -95,8 +92,6 @@ function customizePet() {
 
     displayPetImages();
     displayPetLabels();
-
-    checkChosenPet();
 }
 
 function displayPetImages() {
@@ -146,4 +141,31 @@ function hello() {
     textSize(20);
     text("I will do my best to accompany you and help you in your journey.", width / 2, height / 2 - 160);
 
+}
+
+
+function emotions() {
+    background(180, 200, 150);
+
+    image(chosenPet, width / 2 - 350, height / 2 - 150, 300, 300);
+    textSize(28);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text(`Which one of these best reflects how you're feeling right now? `, width / 2, height / 2 - 200);
+
+}
+
+function mousePressed() {
+    if (state === "title") {
+        state = "instruction";
+    } else if (state === "instruction") {
+        if (mouseY > height / 2 + 90) {
+            state = "customizePet";
+        }
+    } else if (state === "customizePet") {
+        checkChosenPet()
+    } else if (state === "hello") {
+        state = "emotions";
+
+    }
 }
