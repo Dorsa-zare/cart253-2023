@@ -10,19 +10,29 @@
 
 let petImages = []; //The 4 images of the pets
 let chosenPet; //The pet that the user has chosen which will be showin in the next levels
-
+let buttonImages = []; // Array to store button images
+let buttonText = []; // Array to store button text
 let state = "title"; //Starting the game in title state
-
+let titleBackgroundImage; //The background image for the title state
 
 /**
  * Description of preload
 */
 function preload() {
 
-    //The images pf the pets
+    //The images of the pets
     for (let i = 1; i <= 4; i++) {
         petImages[i] = loadImage(`assets/images/pet${i}.png`);
     }
+
+    // Load button images and text into arrays
+    for (let i = 0; i < 4; i++) {
+        buttonImages[i] = loadImage(`assets/images/button.png`);
+    }
+    buttonText = ["Anxious", "Stressed", "Angry", "Happy"];
+
+    //The image for the background of title state  
+    titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
 }
 
 
@@ -48,24 +58,24 @@ function draw() {
         hello();
     } else if (state === "emotions") {
         emotions();
-    }
+    } else if (state === "anxious") {
+        anxious();
+    } else if (state === "plantingGame") {
+        plantingGame();
 
+    }
 }
 
 function title() {
     // The title page
-    background(180, 200, 150);
+    background(titleBackgroundImage);
     displayTitleText();
 }
 
 function displayTitleText() {
     // Display the title and "Press here to start" message
-    textSize(50);
-    textAlign(CENTER, CENTER);
-    fill(0);
-    text("Emotional Support Pet", width / 2, height / 2 - 50);
-    textSize(20);
-    text("Press here to start", width / 2, height / 2 + 50);
+    textSize(30);
+    text("Press mouse to start", width / 2 - 150, height / 2 + 50);
 }
 
 
@@ -131,28 +141,35 @@ function checkChosenPet() {
 function hello() {
     // Display the chosen pet image
     background(180, 200, 150);
-    image(chosenPet, width / 2 - 150, height / 2 - 150, 300, 300);
+    image(chosenPet, width / 2 - 150, height / 2 - 150, 360, 360);
 
     // Display the text above the pet's head
     textSize(24);
     textAlign(CENTER, CENTER);
     fill(0);
     text("Hello, I will be your emotional support pet", width / 2, height / 2 - 200);
-    textSize(20);
     text("I will do my best to accompany you and help you in your journey.", width / 2, height / 2 - 160);
-
+    textSize(20);
+    text("Press mouse to start", width / 2 + 20, height / 2 + 200);
 }
 
 
 function emotions() {
     background(180, 200, 150);
 
-    image(chosenPet, width / 2 - 350, height / 2 - 150, 300, 300);
+    image(chosenPet, width / 2 - 400, height / 2 - 150, 400, 400);
     textSize(28);
     textAlign(CENTER, CENTER);
     fill(0);
     text(`Which one of these best reflects how you're feeling right now? `, width / 2, height / 2 - 200);
 
+
+    // Display button images and text using arrays
+    for (let i = 0; i < 4; i++) {
+        image(buttonImages[i], width / 2 + 100, height / 2 - 220 + i * 80, 250, 250);
+        text(buttonText[i], width / 2 + 220, height / 2 - 85 + i * 80);
+
+    }
 }
 
 function mousePressed() {
@@ -166,6 +183,30 @@ function mousePressed() {
         checkChosenPet()
     } else if (state === "hello") {
         state = "emotions";
-
+    } else if (state === "emotions") {
+        // Check if the user clicked on the "Anxious" option
+        if (
+            mouseX > width / 2 + 100 &&
+            mouseX < width / 2 + 350 &&
+            mouseY > height / 2 - 220 &&
+            mouseY < height / 2 - 220 + 250
+        ) {
+            state = "anxious"; // Transition to the "anxious" state
+        }
     }
+}
+
+function anxious() {
+    // Display the chosen pet image
+    background(180, 200, 150);
+    image(chosenPet, width / 2 - 150, height / 2 - 150, 360, 360);
+
+    // Display the text above the pet's head
+    textSize(24);
+    textAlign(CENTER, CENTER);
+    fill(0);
+    text("It's normal to feel anxious sometimes but I'm here to help you.", width / 2, height / 2 - 200);
+    text("Let's play a little game that could make you less anxious", width / 2, height / 2 - 160);
+    textSize(20);
+    text("Press mouse to start game", width / 2 + 20, height / 2 + 200);
 }
