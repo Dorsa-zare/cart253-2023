@@ -60,8 +60,8 @@ function draw() {
         emotions();
     } else if (state === "anxious") {
         anxious();
-    // } else if (state === "gameForAnxiety") {
-    //     plantingGame();
+        // } else if (state === "gameForAnxiety") {
+        //     plantingGame();
 
     }
 }
@@ -141,7 +141,7 @@ function checkChosenPet() {
 function hello() {
     // Display the chosen pet image
     background(180, 200, 150);
-    
+
     image(chosenPet, width / 2 - 150, height / 2 - 150, 360, 360);
 
     // Display the text above the pet's head
