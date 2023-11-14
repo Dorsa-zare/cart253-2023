@@ -1,5 +1,5 @@
 /**
- * Project 2 prototype
+ * Project 2 
  * Dorsa Zare
  * 
  * This is a template. You must fill in the title, author, 
@@ -16,7 +16,7 @@ let state = "title"; //Starting the game in title state
 let titleBackgroundImage; //The background image for the title state
 let bubbleImages = []; // Array to store bubble images
 let bubbles = []; // Array to store bubble objects
-
+let tilesImage;
 
 
 /**
@@ -41,6 +41,8 @@ function preload() {
     // Load bubble images into the array
     bubbleImages[0] = loadImage(`assets/images/bubble.png`);
 
+    // Load tiles background image
+    tilesImage = loadImage(`assets/images/tiles.png`)
 }
 
 
@@ -71,7 +73,6 @@ function draw() {
         anxietyGame();
     }
 }
-
 
 function title() {
     // The title page
@@ -181,8 +182,8 @@ function emotions() {
 }
 
 function anxietyGame() {
-    // Display the chosen pet image
-    background(180, 200, 150);
+
+    background(tilesImage);
     // Display the moving bubble images
     moveBubbles();
 }
@@ -206,10 +207,7 @@ function moveBubbles() {
 function createBubbles() {
     // Create individual bubble objects
     for (let i = 0; i < 20; i++) {
-        let bubble = {
-            x: random(width),
-            y: height - i * 100
-        };
+        let bubble = new Bubble(random(width), height + random(20, height))
         bubbles.push(bubble);
     }
 }
@@ -227,14 +225,39 @@ function mousePressed() {
     } else if (state === "hello") {
         state = "emotions";
     } else if (state === "emotions") {
-        // Check if the user clicked on the "Anxious" option
+        handleEmotionsMouseClick();
+    } else if (state === "anxietyGame") {
+        handleBubbleClick();
+    }
+}
+
+
+function handleEmotionsMouseClick() {
+    // Check if the user clicked on the "Anxious" option
+    if (
+        mouseX > width / 2 + 100 &&
+        mouseX < width / 2 + 350 &&
+        mouseY > height / 2 - 220 &&
+        mouseY < height / 2 - 220 + 250
+    ) {
+        state = "anxietyGame"; // Set the state to "anxietyGame"
+    }
+}
+
+function handleBubbleClick() {
+    // Check if the user clicked on a bubble
+    for (let i = 0; i < bubbles.length; i++) {
+        let bubbleX = bubbles[i].x;
+        let bubbleY = bubbles[i].y;
+
         if (
-            mouseX > width / 2 + 100 &&
-            mouseX < width / 2 + 350 &&
-            mouseY > height / 2 - 220 &&
-            mouseY < height / 2 - 220 + 250
+            mouseX > bubbleX &&
+            mouseX < bubbleX + 100 && // Assuming the bubble width is 100
+            mouseY > bubbleY &&
+            mouseY < bubbleY + 100 // Assuming the bubble height is 100
         ) {
-            state = "anxietyGame"; // Set the state to "anxietyGame"
+            // Remove the clicked bubble from the array
+            bubbles.splice(i, 1);
         }
     }
 }
