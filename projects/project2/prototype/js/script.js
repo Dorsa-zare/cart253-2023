@@ -14,6 +14,10 @@ let buttonImages = []; // Array to store button images
 let buttonText = []; // Array to store button text
 let state = "title"; //Starting the game in title state
 let titleBackgroundImage; //The background image for the title state
+let bubbleImages = []; // Array to store bubble images
+let bubbles = []; // Array to store bubble objects
+
+
 
 /**
  * Description of preload
@@ -33,6 +37,10 @@ function preload() {
 
     //The image for the background of title state  
     titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
+
+    // Load bubble images into the array
+    bubbleImages[0] = loadImage(`assets/images/bubble.png`);
+
 }
 
 
@@ -41,6 +49,7 @@ function preload() {
 */
 function setup() {
     createCanvas(windowWidth, windowHeight);
+    createBubbles(); // Call this function to create an array of bubble objects
 }
 
 
@@ -58,13 +67,11 @@ function draw() {
         hello();
     } else if (state === "emotions") {
         emotions();
-    } else if (state === "anxious") {
-        anxious();
-        // } else if (state === "gameForAnxiety") {
-        //     plantingGame();
-
+    } else if (state === "anxietyGame") {
+        anxietyGame();
     }
 }
+
 
 function title() {
     // The title page
@@ -173,6 +180,41 @@ function emotions() {
     }
 }
 
+function anxietyGame() {
+    // Display the chosen pet image
+    background(180, 200, 150);
+    // Display the moving bubble images
+    moveBubbles();
+}
+
+function moveBubbles() {
+    // Display and move individual bubble objects
+    for (let i = 0; i < bubbles.length; i++) {
+        // Move each bubble upwards 
+        bubbles[i].y -= 1; // Adjust the speed of the bubbles by changing the value
+
+        // Display the single bubble image at its new position
+        image(bubbleImages[0], bubbles[i].x, bubbles[i].y, 100, 100);
+
+        // Check if the bubble has moved out of the canvas, then reset its position
+        if (bubbles[i].y < -100) {
+            bubbles[i].y = height;
+        }
+    }
+}
+
+function createBubbles() {
+    // Create individual bubble objects
+    for (let i = 0; i < 20; i++) {
+        let bubble = {
+            x: random(width),
+            y: height - i * 100
+        };
+        bubbles.push(bubble);
+    }
+}
+
+
 function mousePressed() {
     if (state === "title") {
         state = "instruction";
@@ -181,7 +223,7 @@ function mousePressed() {
             state = "customizePet";
         }
     } else if (state === "customizePet") {
-        checkChosenPet()
+        checkChosenPet();
     } else if (state === "hello") {
         state = "emotions";
     } else if (state === "emotions") {
@@ -192,23 +234,7 @@ function mousePressed() {
             mouseY > height / 2 - 220 &&
             mouseY < height / 2 - 220 + 250
         ) {
-            state = "anxious"; // Transition to the "anxious" state
+            state = "anxietyGame"; // Set the state to "anxietyGame"
         }
     }
 }
-
-function anxious() {
-    // Display the chosen pet image
-    background(180, 200, 150);
-    image(chosenPet, width / 2 - 150, height / 2 - 150, 360, 360);
-
-    // Display the text above the pet's head
-    textSize(24);
-    textAlign(CENTER, CENTER);
-    fill(0);
-    text("It's normal to feel anxious sometimes but I'm here to help you.", width / 2, height / 2 - 200);
-    text("Let's play a little game that could make you less anxious", width / 2, height / 2 - 160);
-    textSize(20);
-    text("Press mouse to start game", width / 2 + 20, height / 2 + 200);
-}
-
