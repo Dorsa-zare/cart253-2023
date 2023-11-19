@@ -185,24 +185,12 @@ function anxietyGame() {
 
     background(tilesImage);
     // Display the moving bubble images
-    moveBubbles();
-}
-
-function moveBubbles() {
-    // Display and move individual bubble objects
-    for (let i = 0; i < bubbles.length; i++) {
-        // Move each bubble upwards 
-        bubbles[i].y -= 1; // Adjust the speed of the bubbles by changing the value
-
-        // Display the single bubble image at its new position
-        image(bubbleImages[0], bubbles[i].x, bubbles[i].y, 100, 100);
-
-        // Check if the bubble has moved out of the canvas, then reset its position
-        if (bubbles[i].y < -100) {
-            bubbles[i].y = height;
-        }
+    for (let bubble of bubbles) {
+        bubble.move();
     }
+    Bubble.handleBubbleClick(bubbles);
 }
+
 
 function createBubbles() {
     // Create individual bubble objects
@@ -226,8 +214,6 @@ function mousePressed() {
         state = "emotions";
     } else if (state === "emotions") {
         handleEmotionsMouseClick();
-    } else if (state === "anxietyGame") {
-        handleBubbleClick();
     }
 }
 
@@ -244,20 +230,3 @@ function handleEmotionsMouseClick() {
     }
 }
 
-function handleBubbleClick() {
-    // Check if the user clicked on a bubble
-    for (let i = 0; i < bubbles.length; i++) {
-        let bubbleX = bubbles[i].x;
-        let bubbleY = bubbles[i].y;
-
-        if (
-            mouseX > bubbleX &&
-            mouseX < bubbleX + 100 && // Assuming the bubble width is 100
-            mouseY > bubbleY &&
-            mouseY < bubbleY + 100 // Assuming the bubble height is 100
-        ) {
-            // Remove the clicked bubble from the array
-            bubbles.splice(i, 1);
-        }
-    }
-}
