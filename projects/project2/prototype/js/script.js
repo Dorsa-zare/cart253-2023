@@ -19,6 +19,7 @@ let bubbles = []; // Array to store bubble objects
 let tilesImage;
 let gameDuration; //Duration of the bubble game for anxiety
 let bubblePopSound; //Sound effect for bubble popping
+let positiveAffirmation;
 
 /**
  * Description of preload
@@ -56,7 +57,8 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     createBubbles(); // Call this function to create an array of bubble objects
-    gameDuration = new GameDuration(bubbleImages);
+    gameDuration = new GameDuration(bubbleImages); //The duration of the game for bubble mini game
+    positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal mini game 
 }
 
 
@@ -78,8 +80,11 @@ function draw() {
         anxietyGame(gameDuration.getDuration());
     } else if (state === "promptDuration") {
         gameDuration.prompt();
+    } else if (state === "positiveAffirmation") {
+        positiveAffirmation.prompt();
     }
 }
+
 
 function title() {
     // The title page
@@ -229,14 +234,27 @@ function mousePressed() {
 
 
 function handleEmotionsMouseClick() {
-    // Check if the user clicked on the "Anxious" option
-    if (
-        mouseX > width / 2 + 100 &&
-        mouseX < width / 2 + 350 &&
-        mouseY > height / 2 - 220 &&
-        mouseY < height / 2 - 220 + 250
-    ) {
+    if (isAnxiousOptionClicked()) {
         state = "promptDuration"; // Set the state to "anxietyGame"
-    };
+    } else if (isDiscouragedOptionClicked()) {
+        state = "positiveAffirmation"; // Set the state to "positiveAffirmation"
+    }
 }
 
+function isAnxiousOptionClicked() {
+    return (
+        mouseX > width / 2 + 100 &&
+        mouseX < width / 2 + 250 &&
+        mouseY > height / 2 - 190 &&
+        mouseY < height / 2 - 90
+    );
+}
+
+function isDiscouragedOptionClicked() {
+    return (
+        mouseX > width / 2 + 100 &&
+        mouseX < width / 2 + 250 &&
+        mouseY > height / 2 - 60 &&
+        mouseY < height / 2
+    );
+}
