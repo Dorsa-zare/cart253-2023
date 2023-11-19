@@ -17,7 +17,8 @@ let titleBackgroundImage; //The background image for the title state
 let bubbleImages = []; // Array to store bubble images
 let bubbles = []; // Array to store bubble objects
 let tilesImage;
-
+let gameDuration; //Duration of the bubble game for anxiety
+let bubblePopSound; //Sound effect for bubble popping
 
 /**
  * Description of preload
@@ -33,7 +34,7 @@ function preload() {
     for (let i = 0; i < 4; i++) {
         buttonImages[i] = loadImage(`assets/images/button.png`);
     }
-    buttonText = ["Anxious", "Stressed", "Angry", "Happy"];
+    buttonText = ["Anxious", "Discouraged", "Angry", "Excited"];
 
     //The image for the background of title state  
     titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
@@ -43,6 +44,9 @@ function preload() {
 
     // Load tiles background image
     tilesImage = loadImage(`assets/images/tiles.png`)
+
+    //Load bubble popping sound effect for the anxiety game
+    bubblePopSound = loadSound('assets/sounds/bubblePop.mp3');
 }
 
 
@@ -52,6 +56,7 @@ function preload() {
 function setup() {
     createCanvas(windowWidth, windowHeight);
     createBubbles(); // Call this function to create an array of bubble objects
+    gameDuration = new GameDuration(bubbleImages);
 }
 
 
@@ -70,7 +75,9 @@ function draw() {
     } else if (state === "emotions") {
         emotions();
     } else if (state === "anxietyGame") {
-        anxietyGame();
+        anxietyGame(gameDuration.getDuration());
+    } else if (state === "promptDuration") {
+        gameDuration.prompt();
     }
 }
 
@@ -194,7 +201,7 @@ function anxietyGame() {
 
 function createBubbles() {
     // Create individual bubble objects
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 30; i++) {
         let bubble = new Bubble(random(width), height + random(20, height))
         bubbles.push(bubble);
     }
@@ -214,7 +221,10 @@ function mousePressed() {
         state = "emotions";
     } else if (state === "emotions") {
         handleEmotionsMouseClick();
-    }
+    } else if (state === "promptDuration") {
+        gameDuration.handleSelection();
+        state = "anxietyGame";
+    };
 }
 
 
@@ -226,7 +236,7 @@ function handleEmotionsMouseClick() {
         mouseY > height / 2 - 220 &&
         mouseY < height / 2 - 220 + 250
     ) {
-        state = "anxietyGame"; // Set the state to "anxietyGame"
-    }
+        state = "promptDuration"; // Set the state to "anxietyGame"
+    };
 }
 

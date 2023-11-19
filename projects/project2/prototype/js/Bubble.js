@@ -10,7 +10,7 @@ class Bubble {
     move() {
         // Display and move individual bubble objects
         // Move each bubble upwards 
-        this.y -= 1; // Adjust the speed of the bubbles by changing the value
+        this.y -= 1;
 
         // Display the single bubble image at its new position
         image(bubbleImages[0], this.x, this.y, 100, 100);
@@ -29,10 +29,12 @@ class Bubble {
 
             if (
                 mouseX > bubbleX &&
-                mouseX < bubbleX + 100 && // Assuming the bubble width is 100
+                mouseX < bubbleX + 100 &&
                 mouseY > bubbleY &&
-                mouseY < bubbleY + 100 // Assuming the bubble height is 100
+                mouseY < bubbleY + 100
             ) {
+                // Play the bubble popping sound effect
+                bubblePopSound.play();
                 // Remove the clicked bubble from the array
                 bubbles.splice(i, 1);
             }
