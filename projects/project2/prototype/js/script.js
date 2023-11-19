@@ -21,6 +21,7 @@ let gameDuration; //Duration of the bubble game for anxiety
 let bubblePopSound; //Sound effect for bubble popping
 let positiveAffirmation;
 
+
 /**
  * Description of preload
 */
@@ -30,24 +31,20 @@ function preload() {
     for (let i = 1; i <= 4; i++) {
         petImages[i] = loadImage(`assets/images/pet${i}.png`);
     }
-
     // Load button images and text into arrays
     for (let i = 0; i < 4; i++) {
         buttonImages[i] = loadImage(`assets/images/button.png`);
     }
     buttonText = ["Anxious", "Discouraged", "Angry", "Excited"];
-
     //The image for the background of title state  
     titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
-
     // Load bubble images into the array
     bubbleImages[0] = loadImage(`assets/images/bubble.png`);
-
     // Load tiles background image
     tilesImage = loadImage(`assets/images/tiles.png`)
-
     //Load bubble popping sound effect for the anxiety game
     bubblePopSound = loadSound('assets/sounds/bubblePop.mp3');
+
 }
 
 
@@ -257,4 +254,8 @@ function isDiscouragedOptionClicked() {
         mouseY > height / 2 - 60 &&
         mouseY < height / 2
     );
+}
+
+function mouseReleased() {
+    positiveAffirmation.mouseReleased();
 }
