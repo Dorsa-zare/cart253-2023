@@ -6,7 +6,7 @@ class PositiveAffirmation {
         this.selectedWords = [];
         this.wordBackgroundColors = ["#FFB6C1", "#87CEEB", "#98FB98", "#FFD700", "#FFA07A", "#DDA0DD", "#87CEFA", "#FF6347", "#7CFC00"];
         this.draggedWordIndex = -1; // Index of the dragged word
-
+        this.isDraggingWord = false; // Flag to indicate if a word is being dragged
     }
 
     prompt() {
@@ -46,12 +46,13 @@ class PositiveAffirmation {
                 mouseY < y + 15 &&
                 mouseIsPressed
             ) {
+                this.isDraggingWord = true;
                 this.draggedWordIndex = i;
             }
         }
 
         // Check if a word is being dragged
-        if (this.draggedWordIndex !== -1) {
+        if (this.isDraggingWord) {
             // Draw the dragged word at the current mouse position
             fill(this.wordBackgroundColors[this.draggedWordIndex]);
             rect(mouseX - textWidth(this.words[this.draggedWordIndex]) / 2 - 5, mouseY - 15, textWidth(this.words[this.draggedWordIndex]) + 10, 30);
@@ -60,18 +61,25 @@ class PositiveAffirmation {
         }
     }
 
-
     getSelectedWords() {
-        return this.selectedWords;
-    }
-
-    mouseReleased() {
         // Check if a word was being dragged and the mouse button is released
-        if (this.draggedWordIndex !== -1) {
-            // Update the position of the word in the selectedWords array
-            this.selectedWords.push(this.words[this.draggedWordIndex]);
-            // Reset the draggedWordIndex
+        if (this.isDraggingWord && !mouseIsPressed) {
+            // Check if the dragged word is over a valid drop area
+            if (
+                mouseX > 80 &&
+                mouseX < 280 &&
+                mouseY > 360 &&
+                mouseY < 560
+            ) {
+                // Update the position of the word in the selectedWords array
+                this.selectedWords.push(this.words[this.draggedWordIndex]);
+            }
+
+            // Reset the draggedWordIndex and isDraggingWord
             this.draggedWordIndex = -1;
+            this.isDraggingWord = false;
         }
+
+        return this.selectedWords;
     }
 }
