@@ -10,7 +10,6 @@
 
 let state = "title"; //Starting the game in title state
 let title; // The class that displays the title
-let instruction; //The class that displays instructions
 let petCustomization; //The state where user can choose prefered pet image
 let petImages = []; //The 4 images of the pets
 let chosenPet; //The pet that the user has chosen which will be showin in the next levels
@@ -26,13 +25,13 @@ let tilesImage; //Th eimage of tiles for background of bubble game
 let gameDuration; //Duration of the bubble game for anxiety
 let bubblePopSound; //Sound effect for bubble popping
 let positiveAffirmation; //The state which has the positive affirmation journal mini game
+let painting; //The state which has the painting mini game
 
 
 /**
  * Description of preload
 */
 function preload() {
-
     // Load button images and text into arrays
     for (let i = 0; i < 4; i++) {
         buttonImages[i] = loadImage(`assets/images/button.png`);
@@ -46,7 +45,6 @@ function preload() {
     tilesImage = loadImage(`assets/images/tiles.png`)
     //Load bubble popping sound effect for the anxiety game
     bubblePopSound = loadSound('assets/sounds/bubblePop.mp3');
-
 }
 
 
@@ -55,7 +53,6 @@ function preload() {
 */
 function setup() {
     createCanvas(windowWidth, windowHeight);
-    instruction = new Instruction(); // The class that displays instructions
     title = new Title(titleBackgroundImage); // The class that displays the title
     petCustomization = new PetCustomization(); // The class that includes pet customization 
     petCustomization.preload();
@@ -65,8 +62,9 @@ function setup() {
     anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound); // The class that handles the anxiety game
     gameDuration = new GameDuration(bubbleImages); // The duration of the game for the bubble mini-game
     positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal mini game
-}
+    painting = new Painting(); // Corrected class name to "Painting"
 
+}
 
 /**
  * Description of draw()
@@ -74,8 +72,6 @@ function setup() {
 function draw() {
     if (state === "title") {
         title.display();
-    } else if (state === "instruction") {
-        instruction.display();
     } else if (state === "customizePet") {
         petCustomization.draw();
     } else if (state === "hello") {
@@ -88,19 +84,15 @@ function draw() {
         gameDuration.prompt();
     } else if (state === "positiveAffirmation") {
         positiveAffirmation.prompt();
+    } else if (state === "painting") {
+        painting.prompt();
     }
 }
 
 
-
-
 function mousePressed() {
     if (state === "title") {
-        state = "instruction";
-    } else if (state === "instruction") {
-        if (mouseY > height / 2 + 90) {
-            state = "customizePet";
-        }
+        state = "customizePet";
     } else if (state === "customizePet") {
         petCustomization.checkChosenPet();
     } else if (state === "hello") {
@@ -110,9 +102,13 @@ function mousePressed() {
     } else if (state === "promptDuration") {
         gameDuration.handleSelection();
         state = "anxietyGame";
-    };
+    } else if (state === "positiveAffirmation") {
+        positiveAffirmation.mousePressed();
+    }
 }
 
 function mouseReleased() {
-    positiveAffirmation.mouseReleased();
+    if (state === "positiveAffirmation") {
+        positiveAffirmation.mouseReleased();
+    }
 }

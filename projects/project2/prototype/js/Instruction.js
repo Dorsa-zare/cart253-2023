@@ -4,8 +4,7 @@ class Instruction {
         textSize(28);
         textAlign(CENTER, CENTER);
         fill(0);
-        text(`Have fun interacting with your virtual companion and
-            watch how it responds to your emotions.
+        text(`Have fun interacting with your virtual companion
             Don't forget to customize your pet's look to make it your own.
             Enjoy exploring the world of emotional well-being in this interactive experience!`, width / 2, height / 2 - 50);
         textSize(20);

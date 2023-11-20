@@ -1,21 +1,23 @@
 class Emotions {
     constructor(petCustomization) {
         this.petCustomization = petCustomization;
+        this.backgroundImage = loadImage("assets/images/nature.png");
     }
 
+
     display() {
-        background(180, 200, 150);
+        background(this.backgroundImage);
 
         image(this.petCustomization.chosenPet, width / 2 - 400, height / 2 - 150, 400, 400);
         textSize(28);
         textAlign(CENTER, CENTER);
         fill(0);
-        text(`Which one of these best reflects how you're feeling right now? `, width / 2, height / 2 - 200);
+        text(`Which one of these best reflects how you're feeling right now? `, width / 2 + 50, height / 2 - 220);
 
         // Display button images and text using arrays
         for (let i = 0; i < 4; i++) {
-            image(buttonImages[i], width / 2 + 100, height / 2 - 220 + i * 80, 250, 250);
-            text(buttonText[i], width / 2 + 220, height / 2 - 85 + i * 80);
+            image(buttonImages[i], width / 2 + 100, height / 2 - 220 + i * 80, 270, 250);
+            text(buttonText[i], width / 2 + 240, height / 2 - 90 + i * 80);
         }
     }
 
@@ -26,8 +28,12 @@ class Emotions {
         } else if (this.isDiscouragedOptionClicked()) {
             // Set the state to "positiveAffirmation"
             state = "positiveAffirmation";
+        } else if (this.isAngryOptionClicked()) {
+            // Set the state to "painting"
+            state = "painting";
         }
     }
+
 
     isAnxiousOptionClicked() {
         return (
@@ -46,4 +52,13 @@ class Emotions {
             mouseY < height / 2
         );
     }
+    isAngryOptionClicked() {
+        return (
+            mouseX > width / 2 + 100 &&
+            mouseX < width / 2 + 250 &&
+            mouseY > height / 2 + 70 &&
+            mouseY < height / 2 + 90
+        );
+    }
 }
+
