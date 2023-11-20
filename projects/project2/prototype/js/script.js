@@ -19,6 +19,7 @@ let emotions; //the stat that shows emotions menu
 let buttonImages = []; // Array to store button images
 let buttonText = []; // Array to store button text
 let titleBackgroundImage; //The background image for the title state
+let anxietyGame; // The class that handles the anxiety game
 let bubbleImages = []; // Array to store bubble images
 let bubbles = []; // Array to store bubble objects
 let tilesImage; //Th eimage of tiles for background of bubble game
@@ -56,14 +57,14 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     instruction = new Instruction(); // The class that displays instructions
     title = new Title(titleBackgroundImage); // The class that displays the title
-    petCustomization = new PetCustomization(); //The class that includes pet customization 
+    petCustomization = new PetCustomization(); // The class that includes pet customization 
     petCustomization.preload();
     petCustomization.setup();
-    hello = new Hello(petCustomization); //The class that the chosen pet says hello
-    emotions = new Emotions(petCustomization); //The class that displays emotions menu
-    createBubbles(); // Call this function to create an array of bubble objects
-    gameDuration = new GameDuration(bubbleImages); //The duration of the game for bubble mini game
-    positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal mini game 
+    hello = new Hello(petCustomization); // The class that the chosen pet says hello
+    emotions = new Emotions(petCustomization); // The class that displays emotions menu
+    anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound); // The class that handles the anxiety game
+    gameDuration = new GameDuration(bubbleImages); // The duration of the game for the bubble mini-game
+    positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal mini game
 }
 
 
@@ -82,7 +83,7 @@ function draw() {
     } else if (state === "emotions") {
         emotions.display();
     } else if (state === "anxietyGame") {
-        anxietyGame(gameDuration.getDuration());
+        anxietyGame.display();
     } else if (state === "promptDuration") {
         gameDuration.prompt();
     } else if (state === "positiveAffirmation") {
@@ -91,22 +92,6 @@ function draw() {
 }
 
 
-function anxietyGame() {
-    background(tilesImage);
-    // Display the moving bubble images
-    for (let bubble of bubbles) {
-        bubble.move();
-    }
-    Bubble.handleBubbleClick(bubbles);
-}
-
-function createBubbles() {
-    // Create individual bubble objects
-    for (let i = 0; i < 30; i++) {
-        let bubble = new Bubble(random(width), height + random(20, height))
-        bubbles.push(bubble);
-    }
-}
 
 
 function mousePressed() {
