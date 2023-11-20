@@ -61,25 +61,4 @@ class PositiveAffirmation {
         }
     }
 
-    getSelectedWords() {
-        // Check if a word was being dragged and the mouse button is released
-        if (this.isDraggingWord && !mouseIsPressed) {
-            // Check if the dragged word is over a valid drop area
-            if (
-                mouseX > 80 &&
-                mouseX < 280 &&
-                mouseY > 360 &&
-                mouseY < 560
-            ) {
-                // Update the position of the word in the selectedWords array
-                this.selectedWords.push(this.words[this.draggedWordIndex]);
-            }
-
-            // Reset the draggedWordIndex and isDraggingWord
-            this.draggedWordIndex = -1;
-            this.isDraggingWord = false;
-        }
-
-        return this.selectedWords;
-    }
 }
