@@ -62,7 +62,8 @@ function setup() {
     anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound); // The class that handles the anxiety game
     gameDuration = new GameDuration(bubbleImages); // The duration of the game for the bubble mini-game
     positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal mini game
-    painting = new Painting(); // Corrected class name to "Painting"
+    painting = new Painting(petCustomization);
+
 
 }
 
@@ -85,7 +86,7 @@ function draw() {
     } else if (state === "positiveAffirmation") {
         positiveAffirmation.prompt();
     } else if (state === "painting") {
-        painting.prompt();
+        painting.display();
     }
 }
 
@@ -104,9 +105,10 @@ function mousePressed() {
         state = "anxietyGame";
     } else if (state === "positiveAffirmation") {
         positiveAffirmation.mousePressed();
+    } else if (state === "painting") {
+        painting.mousePressed();
     }
 }
-
 function mouseReleased() {
     if (state === "positiveAffirmation") {
         positiveAffirmation.mouseReleased();
