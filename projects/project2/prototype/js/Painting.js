@@ -5,6 +5,7 @@ class Painting {
         this.backgroundImagePrompt = loadImage("assets/images/room.png"); //Background image for the prompt state
         this.backgroundImagePainting = loadImage("assets/images/paintingbg.png"); // background image for painting
         this.buttonImage = loadImage("assets/images/button.png");
+        this.rollerImage = loadImage("assets/images/roller.png");
         this.nextButtonText = "Next";
     }
 
@@ -38,7 +39,9 @@ class Painting {
     displayPainting() {
         // Display the new screen for the painting mini-game
         background(this.backgroundImagePainting);
-        
+        noCursor();
+        // Use the user's mouse position to display the roller image
+        image(this.rollerImage, mouseX - 40, mouseY - 40, 150, 150);
     }
 
     mousePressed() {

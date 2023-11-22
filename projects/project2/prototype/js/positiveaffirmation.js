@@ -85,6 +85,8 @@ class PositiveAffirmation {
     mouseReleased() {
         // Check if a word is being dragged and released
         if (this.isDraggingWord) {
+            //add the rect position see if mouse is inside rect
+            
             // Add the word to the selectedWords array and reset dragging flags
             this.selectedWords.push(this.words[this.draggedWordIndex]);
             this.isDraggingWord = false;

@@ -52,19 +52,18 @@ function preload() {
  * Description of setup
 */
 function setup() {
+
     createCanvas(windowWidth, windowHeight);
-    title = new Title(titleBackgroundImage); // The class that displays the title
-    petCustomization = new PetCustomization(); // The class that includes pet customization 
+    title = new Title(titleBackgroundImage);
+    petCustomization = new PetCustomization();
     petCustomization.preload();
     petCustomization.setup();
-    hello = new Hello(petCustomization); // The class that the chosen pet says hello
-    emotions = new Emotions(petCustomization); // The class that displays emotions menu
-    anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound); // The class that handles the anxiety game
-    gameDuration = new GameDuration(bubbleImages); // The duration of the game for the bubble mini-game
-    positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal mini game
+    hello = new Hello(petCustomization);
+    emotions = new Emotions(petCustomization);
+    gameDuration = new GameDuration(bubbleImages); // Initialize gameDuration first
+    anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound, gameDuration.getDuration());
+    positiveAffirmation = new PositiveAffirmation();
     painting = new Painting(petCustomization);
-
-
 }
 
 /**
