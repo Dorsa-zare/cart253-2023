@@ -6,6 +6,7 @@ class Painting {
         this.backgroundImagePainting = loadImage("assets/images/paintingbg.png"); // Background image for painting
         this.buttonImage = loadImage("assets/images/button.png");
         this.rollerImage = loadImage("assets/images/roller.png");
+        this.wallImage = loadImage("assets/images/wall.png");
         this.nextButtonText = "Next";
         this.paintedSquares = [];
     }
@@ -41,6 +42,9 @@ class Painting {
         // Display the new screen for the painting mini-game
         background(this.backgroundImagePainting);
         noCursor();
+
+        //The image of the wall which will be painted on
+        image(this.wallImage, width / 2 - 550 , height / 2 - 220 , 1080, 410);
 
         // Draw previously painted squares
         fill(255, 186, 240); // Pink color
