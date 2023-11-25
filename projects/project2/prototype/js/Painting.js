@@ -40,10 +40,16 @@ class Painting {
         // Display the new screen for the painting mini-game
         background(this.backgroundImagePainting);
         noCursor();
+        // Draw a pink square at the mouse position
+        fill(255, 186, 240); // Pink color
+        noStroke();
+        rect(mouseX - 10, mouseY - 30, 70, 30);
+
         // Use the user's mouse position to display the roller image
         image(this.rollerImage, mouseX - 40, mouseY - 40, 150, 150);
     }
 
+    
     mousePressed() {
         // Check if the mouse is pressed on the "Next" button
         if (

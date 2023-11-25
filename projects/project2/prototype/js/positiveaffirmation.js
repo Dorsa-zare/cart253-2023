@@ -1,30 +1,199 @@
 class PositiveAffirmation {
     constructor() {
+        // Initial state and assets
         this.state = "prompt";
         this.backgroundImage = loadImage("assets/images/journal.png");
-        this.words = ["Loved", "Strong", "Confident", "Calm", "happy", "Brave", "I am"];
+        this.resultbackgroundImage = loadImage("assets/images/resultbg.png");
+        this.petCustomization = petCustomization;
+
+        // Speech recognition and synthesis objects
+        this.speechRec;
+        this.speech;
+
+        // Word-related properties
+        this.words = [];
         this.selectedWords = [];
         this.wordBackgroundColors = ["#FFB6C1", "#87CEEB", "#98FB98", "#FFD700", "#FFA07A", "#DDA0DD", "#87CEFA", "#FF6347", "#7CFC00"];
-        this.draggedWordIndex = -1; // Index of the dragged word
-        this.isDraggingWord = false; // Flag to indicate if a word is being dragged
+        this.draggedWordIndex = -1;
+        this.isDraggingWord = false;
+
+        // Create word objects
+        const wordList = ["Loved", "Strong", "Confident", "Calm", "happy", "Brave", "I am"];
+        for (let i = 0; i < wordList.length; i++) {
+            this.words.push({
+                text: wordList[i],
+                x: width / 2 + 500,
+                y: height / 2 - 150 + i * 50
+            });
+        }
     }
 
+
     prompt() {
-        // Display the initial prompt for the Positive Affirmation Journals mini game
-        background(this.backgroundImage);
-        textSize(30);
+        if (this.state === "prompt") {
+            // Display the prompt state
+            background(this.backgroundImage);
+            textSize(30);
+            textAlign(CENTER, CENTER);
+            fill(0);
+            text("Welcome to the Positive Affirmation Journals!", width / 2 - 200, height / 2 - 210);
+            textSize(15);
+            text('Create your own positive affirmation.', width / 2 - 350, height / 2 - 50);
+            text('Once you are done, press the button below', width / 2 - 350, height / 2 + 20);
+
+            // "See Result" button
+            fill(20);
+            textSize(20);
+            rect(width / 2 - 425, height / 2 + 100, 150, 40);
+            fill(255);
+            text("See Result", width / 2 - 350, height / 2 + 120);
+
+            // Display rectangles which the words needs to be dropped in
+            noStroke();
+            fill(240);
+            rect(600, 200, 150, 55);
+            rect(600, 310, 150, 55);
+            this.displayWords();
+        } else if (this.state === "result") {
+            // Display the result state
+            this.result();
+
+        }
+    }
+
+
+    mousePressed() {
+        // Check if the user clicked on a word and set the draggedWordIndex
+        for (let i = 0; i < this.words.length; i++) {
+            if (
+                mouseX > this.words[i].x - textWidth(this.words[i].text) / 2 - 5 &&
+                mouseX < this.words[i].x + textWidth(this.words[i].text) / 2 + 5 &&
+                mouseY > this.words[i].y - 15 &&
+                mouseY < this.words[i].y + 15
+            ) {
+                this.isDraggingWord = true;
+                this.draggedWordIndex = i;
+            }
+        }
+        // Check if the user clicked on the "See Result" button
+        if (
+            mouseX > width / 2 - 425 &&
+            mouseX < width / 2 - 275 &&
+            mouseY > height / 2 + 100 &&
+            mouseY < height / 2 + 140
+        ) {
+            // Change the state to "result" if the button is clicked
+            this.result();
+        }
+    }
+
+
+    mouseReleased() {
+        // Check if a word is being dragged and released
+        if (this.isDraggingWord && this.draggedWordIndex !== -1) {
+            // Update the x and y coordinates of the dragged word based on the mouse release position
+            let releasedX = mouseX - textWidth(this.words[this.draggedWordIndex].text) / 2;
+            let releasedY;
+
+            // Check if the mouse is released inside the first or second rectangle
+            if ((mouseX > 600 && mouseX < 750) && ((mouseY > 200 && mouseY < 255) || (mouseY > 310 && mouseY < 365))) {
+                releasedY = (mouseY > 200 && mouseY < 255) ? 227 : 340;
+                this.words[this.draggedWordIndex].x = 700 - textWidth(this.words[this.draggedWordIndex].text) / 2;
+                this.words[this.draggedWordIndex].y = releasedY;
+
+                // Capture the selected word in the appropriate slot
+                const selectedWord = this.words[this.draggedWordIndex].text;
+                if (releasedY === 227) {
+                    // Top rectangle
+                    this.selectedWords[0] = selectedWord;
+                } else {
+                    // Bottom rectangle
+                    this.selectedWords[1] = selectedWord;
+                }
+            }
+
+            // Reset dragging flags
+            this.isDraggingWord = false;
+            this.draggedWordIndex = -1;
+        }
+    }
+
+
+    getSelectedWord(x, y) {
+        // Check for selected words during dragging
+        for (let i = this.words.length - 1; i >= 0; i--) {
+            const word = this.words[i];
+            if (
+                mouseX > word.x - textWidth(word.text) / 2 &&
+                mouseX < word.x + textWidth(word.text) / 2 &&
+                mouseY > word.y - 15 &&
+                mouseY < word.y + 15
+            ) {
+                if (!this.selectedWords.includes(word.text)) {
+                    // Capture the selected word
+                    this.selectedWords.push(word.text);
+                    return word.text;
+                }
+            }
+        }
+        return '';
+    }
+
+
+    result() {
+        // Transition to the result state
+        this.state = "result";
+
+        // Display the result state
+        background(this.resultbackgroundImage);
+        textSize(25);
         textAlign(CENTER, CENTER);
         fill(0);
-        text("Welcome to the Positive Affirmation Journals!", width / 2 - 200, height / 2 - 210);
-        textSize(15);
-        text('Create your own positive affirmation.', width / 2 - 350, height / 2 - 50);
-        
-        noStroke();
-        fill(240)
-        rect(600, 200, 150, 55);
-        rect(600, 310, 150, 55);
-        this.displayWords();
+
+        // Additional text specific to the result state
+        text(`Read your affirmation out loud`, width / 2 - 400, height / 2 - 50);
+
+        image(this.petCustomization.chosenPet, width / 2 - 550, height / 2 - 50, 350, 350);
+
+        // Display the selected words in the result state
+        this.displaySelectedWords();
+
+        // Start speech recognition
+        this.speechRec = new p5.SpeechRec();
+        this.speechRec.onResult = this.showResult.bind(this);
+        this.speechRec.start();
+
     }
+
+    showResult() {
+        if (this.speechRec.resultValue) {
+            let recognizedWord = this.speechRec.resultString.toLowerCase();
+            console.log("Recognized word:", recognizedWord);
+
+            // Check if the recognized word matches one of the selected words
+            if (recognizedWord === this.selectedWords[0] || recognizedWord === this.selectedWords[1]) {
+                // Provide feedback using text-to-speech
+                this.speech = new p5.Speech();
+                this.speech.speak("Good job! You said the affirmation!");
+            }
+        }
+    }
+
+
+    displaySelectedWords() {
+        // Display the selected words
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        fill(0);
+
+        const word1 = this.selectedWords[0] || "Selected Word 1";
+        const word2 = this.selectedWords[1] || "Selected Word 2";
+        text(word1, width / 2 + 60, height / 2 + 10);
+        text(word2, width / 2 + 250, height / 2 + 10);
+    }
+
+
+
 
     displayWords() {
         // Display the set of positive words on the right side
@@ -32,66 +201,22 @@ class PositiveAffirmation {
         textAlign(CENTER, CENTER);
 
         for (let i = 0; i < this.words.length; i++) {
-            let x = width / 2 + 500;
-            let y = height / 2 - 150 + i * 50;
-
             // Draw background color for each word
             fill(this.wordBackgroundColors[i]);
-            rect(x - textWidth(this.words[i]) / 2 - 5, y - 15, textWidth(this.words[i]) + 10, 30);
+            rect(this.words[i].x - textWidth(this.words[i].text) / 2 - 5, this.words[i].y - 15, textWidth(this.words[i].text) + 10, 30);
 
-            // Draw the word
-            fill(0);
-            text(this.words[i], x, y);
-
-            // Check if the user clicked on a word and set the draggedWordIndex
-            if (
-                mouseX > x - textWidth(this.words[i]) / 2 - 5 &&
-                mouseX < x + textWidth(this.words[i]) / 2 + 5 &&
-                mouseY > y - 15 &&
-                mouseY < y + 15 &&
-                mouseIsPressed
-            ) {
-                this.isDraggingWord = true;
-                this.draggedWordIndex = i;
-            }
-        }
-        if (this.isDraggingWord) {
-            // Draw the dragged word at the current mouse position
-            fill(this.wordBackgroundColors[this.draggedWordIndex]);
-            rect(mouseX - textWidth(this.words[this.draggedWordIndex]) / 2 - 5, mouseY - 15, textWidth(this.words[this.draggedWordIndex]) + 10, 30);
-            fill(0);
-            text(this.words[this.draggedWordIndex], mouseX, mouseY);
-        }
-    }
-
-    mousePressed() {
-        // Check if the user clicked on a word and set the draggedWordIndex
-        for (let i = 0; i < this.words.length; i++) {
-            let x = width / 2 + 500;
-            let y = height / 2 - 150 + i * 40;
-
-            if (
-                mouseX > x - textWidth(this.words[i]) / 2 - 5 &&
-                mouseX < x + textWidth(this.words[i]) / 2 + 5 &&
-                mouseY > y - 15 &&
-                mouseY < y + 15
-            ) {
-                this.isDraggingWord = true;
-                this.draggedWordIndex = i;
+            if (this.isDraggingWord && this.draggedWordIndex === i) {
+                // Draw the dragged word at the current mouse position
+                fill(this.wordBackgroundColors[this.draggedWordIndex]);
+                rect(mouseX - textWidth(this.words[i].text) / 2 - 5, mouseY - 15, textWidth(this.words[i].text) + 10, 30);
+                fill(0);
+                text(this.words[i].text, mouseX, mouseY);
+            } else {
+                // Draw the word at its original position
+                fill(0);
+                text(this.words[i].text, this.words[i].x, this.words[i].y);
             }
         }
     }
 
-    mouseReleased() {
-        // Check if a word is being dragged and released
-        if (this.isDraggingWord) {
-            //add the rect position see if mouse is inside rect
-            
-            // Add the word to the selectedWords array and reset dragging flags
-            this.selectedWords.push(this.words[this.draggedWordIndex]);
-            this.isDraggingWord = false;
-            this.draggedWordIndex = -1;
-        }
-    }
 }
-
