@@ -1,6 +1,6 @@
 class Title {
     constructor(titleBackgroundImage) {
-        this.titleBackgroundImage = titleBackgroundImage;
+        this.titleBackgroundImage = titleBackgroundImage; //Background image for the title page
     }
 
     display() {
@@ -12,6 +12,7 @@ class Title {
     displayTitleText() {
         // Display the title and "Press here to start" message
         textSize(30);
-        text("Press mouse to start", width / 2 - 150, height / 2 + 50);
+        textAlign(CENTER, CENTER);
+        text("Press mouse to start", width / 2  , height / 2 - 50);
     }
 }

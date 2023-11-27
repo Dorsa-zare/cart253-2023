@@ -15,7 +15,7 @@ class Emotions {
         text(`Which one of these best reflects how you're feeling right now? `, width / 2 + 50, height / 2 - 220);
 
         // Display button images and text using arrays
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 3; i++) {
             image(buttonImages[i], width / 2 + 100, height / 2 - 220 + i * 80, 270, 250);
             text(buttonText[i], width / 2 + 240, height / 2 - 90 + i * 80);
         }
@@ -39,8 +39,8 @@ class Emotions {
         return (
             mouseX > width / 2 + 100 &&
             mouseX < width / 2 + 250 &&
-            mouseY > height / 2 - 190 &&
-            mouseY < height / 2 - 90
+            mouseY > height / 2 - 200 &&
+            mouseY < height / 2 - 75
         );
     }
 
@@ -48,8 +48,8 @@ class Emotions {
         return (
             mouseX > width / 2 + 100 &&
             mouseX < width / 2 + 250 &&
-            mouseY > height / 2 - 60 &&
-            mouseY < height / 2
+            mouseY > height / 2 - 65 &&
+            mouseY < height / 2 + 20
         );
     }
     isAngryOptionClicked() {

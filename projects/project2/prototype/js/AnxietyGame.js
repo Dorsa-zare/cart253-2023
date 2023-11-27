@@ -1,14 +1,10 @@
-// AnxietyGame.js
-
 class AnxietyGame {
     constructor(tilesImage, bubbleImages, bubblePopSound, gameDuration) {
         this.tilesImage = tilesImage;
         this.bubbleImages = bubbleImages;
         this.bubblePopSound = bubblePopSound;
         this.bubbles = [];
-
-        this.gameOverTimer = 0;
-        this.gameLength = 60 * 30; // 30 seconds
+        this.buttonImage = loadImage("assets/images/button.png"); // button image
 
         this.createBubbles();
     }
@@ -20,32 +16,62 @@ class AnxietyGame {
             this.bubbles.push(bubble);
         }
     }
-
     display() {
         background(this.tilesImage);
 
-        // Display the moving bubble images
-        for (let bubble of this.bubbles) {
-            bubble.move();
-            bubble.display();
+        image(this.buttonImage, width / 2 + 410, height / 2 - 330, 180, 180); // The image of the exit button
 
-            // Check if the bubble is clicked
-            if (bubble.isClicked()) {
-                // Play the bubble popping sound effect
-                this.bubblePopSound.play();
-                // Reset the position of the clicked bubble
-                bubble.x = random(width);
-                bubble.y = height + random(20, height);
+        // Display the title and the options text
+        textSize(30);
+        textAlign(CENTER, CENTER);
+        fill(0);
+        text("Exit", width / 2 + 500, height / 2 - 235);
+
+        // Only check for mouse press when the mouse button is pressed
+        if (mouseIsPressed) {
+            this.mousePressed();
+        }
+
+        // Display the moving bubble images
+        if (gameDuration.getDuration() !== 30) {
+            // Only create new bubbles if the game duration is not 30 seconds
+            for (let bubble of this.bubbles) {
+                bubble.move();
+                bubble.display();
+
+                // Check if the bubble is clicked
+                if (bubble.isClicked()) {
+                    // Play the bubble popping sound effect
+                    this.bubblePopSound.play();
+                    // Reset the position of the clicked bubble
+                    bubble.x = random(width);
+                    bubble.y = height + random(20, height);
+                }
             }
         }
 
-        // Increase the timer's count by one frame
-        this.gameOverTimer++;
-
-        // Check if we have reached the end of our timer
-        if (this.gameOverTimer >= this.gameLength) {
-            // The game is over! So you should handle the logic for game over
-            this.gameOver();
+        // Check if the play duration is reached
+        if (gameDuration.getDuration() === 30 && gameDuration.startTime + gameDuration.playDuration * 1000 <= millis()) {
+            console.log("Game Duration reached. Transitioning back to emotions state.");
+            state = "emotions"; // Transition back to emotions state
         }
     }
+    // Function to handle mouse press in the AnxietyGame state
+    mousePressed() {
+        // Check if the mouse is over the exit button
+        if (
+            mouseX > width / 2 + 410 &&
+            mouseX < width / 2 + 590 &&
+            mouseY > height / 2 - 330 &&
+            mouseY < height / 2 - 150
+        ) {
+            // Handle the exit button click (transition back to emotions state)
+            this.handleMousePress();
+        }
+    }
+
+    handleMousePress() {
+        state = "emotions";
+    }
 }
+

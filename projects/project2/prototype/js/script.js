@@ -36,7 +36,7 @@ function preload() {
     for (let i = 0; i < 4; i++) {
         buttonImages[i] = loadImage(`assets/images/button.png`);
     }
-    buttonText = ["Anxious", "Discouraged", "Angry", "Excited"];
+    buttonText = ["Anxious", "Discouraged", "Angry"];
     //The image for the background of title state  
     titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
     // Load bubble images into the array

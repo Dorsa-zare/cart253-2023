@@ -5,7 +5,6 @@ class PositiveAffirmation {
         this.backgroundImage = loadImage("assets/images/journal.png");
         this.resultbackgroundImage = loadImage("assets/images/resultbg.png");
         this.petCustomization = petCustomization;
-
         // Speech recognition and synthesis objects
         this.speechRec;
         this.speech;
@@ -37,9 +36,10 @@ class PositiveAffirmation {
             textAlign(CENTER, CENTER);
             fill(0);
             text("Welcome to the Positive Affirmation Journals!", width / 2 - 200, height / 2 - 210);
+            textSize(18);
+            text('Create your own positive affirmation.', width / 2 - 350, height / 2 - 40);
             textSize(15);
-            text('Create your own positive affirmation.', width / 2 - 350, height / 2 - 50);
-            text('Once you are done, press the button below', width / 2 - 350, height / 2 + 20);
+            text('Once you are done, press the button below', width / 2 - 350, height / 2 + 10);
 
             // "See Result" button
             fill(20);
@@ -157,26 +157,6 @@ class PositiveAffirmation {
 
         // Display the selected words in the result state
         this.displaySelectedWords();
-
-        // Start speech recognition
-        this.speechRec = new p5.SpeechRec();
-        this.speechRec.onResult = this.showResult.bind(this);
-        this.speechRec.start();
-
-    }
-
-    showResult() {
-        if (this.speechRec.resultValue) {
-            let recognizedWord = this.speechRec.resultString.toLowerCase();
-            console.log("Recognized word:", recognizedWord);
-
-            // Check if the recognized word matches one of the selected words
-            if (recognizedWord === this.selectedWords[0] || recognizedWord === this.selectedWords[1]) {
-                // Provide feedback using text-to-speech
-                this.speech = new p5.Speech();
-                this.speech.speak("Good job! You said the affirmation!");
-            }
-        }
     }
 
 
