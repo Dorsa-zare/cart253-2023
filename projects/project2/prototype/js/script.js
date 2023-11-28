@@ -59,7 +59,7 @@ function setup() {
     petCustomization.setup();
     hello = new Hello(petCustomization);
     emotions = new Emotions(petCustomization);
-    gameDuration = new GameDuration(bubbleImages); // Initialize gameDuration first
+    gameDuration = new GameDuration(); // Initialize gameDuration first
     anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound, gameDuration.getDuration());
     positiveAffirmation = new PositiveAffirmation();
     painting = new Painting(petCustomization);
