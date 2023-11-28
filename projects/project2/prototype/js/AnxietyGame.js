@@ -7,6 +7,15 @@ class AnxietyGame {
         this.buttonImage = loadImage("assets/images/button.png"); // button image
 
         this.createBubbles();
+        // this.startTime = millis()
+
+    }
+
+    startTimer() {
+        console.log(gameDuration.playDuration);
+        setTimeout(() => {
+            state = `emotions`;
+        }, gameDuration.playDuration * 1000);
     }
 
     createBubbles() {
@@ -16,6 +25,7 @@ class AnxietyGame {
             this.bubbles.push(bubble);
         }
     }
+
     display() {
         background(this.tilesImage);
 
@@ -33,28 +43,27 @@ class AnxietyGame {
         }
 
         // Display the moving bubble images
-        if (gameDuration.getDuration() !== 30) {
-            // Only create new bubbles if the game duration is not 30 seconds
-            for (let bubble of this.bubbles) {
-                bubble.move();
-                bubble.display();
+        // if (gameDuration.getDuration() !== 30) {
+        // Only create new bubbles if the game duration is not 30 seconds
+        for (let bubble of this.bubbles) {
+            bubble.move();
+            bubble.display();
 
-                // Check if the bubble is clicked
-                if (bubble.isClicked()) {
-                    // Play the bubble popping sound effect
-                    this.bubblePopSound.play();
-                    // Reset the position of the clicked bubble
-                    bubble.x = random(width);
-                    bubble.y = height + random(20, height);
-                }
+            // Check if the bubble is clicked
+            if (bubble.isClicked()) {
+                // Play the bubble popping sound effect
+                this.bubblePopSound.play();
+                // Reset the position of the clicked bubble
+                bubble.x = random(width);
+                bubble.y = height + random(20, height);
             }
         }
 
-        // Check if the play duration is reached
-        if (gameDuration.getDuration() === 30 && gameDuration.startTime + gameDuration.playDuration * 1000 <= millis()) {
-            console.log("Game Duration reached. Transitioning back to emotions state.");
-            state = "emotions"; // Transition back to emotions state
-        }
+        // console.log(gameDuration.startTime + gameDuration.playDuration * 1000, millis());
+        // // Check if the play duration is reached
+        // if (gameDuration.startTime + gameDuration.playDuration * 1000 > millis()) {
+        //     state = "emotions"; // Transition back to emotions state
+        // }
     }
     // Function to handle mouse press in the AnxietyGame state
     mousePressed() {

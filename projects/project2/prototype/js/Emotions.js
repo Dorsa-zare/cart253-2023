@@ -57,7 +57,7 @@ class Emotions {
             mouseX > width / 2 + 100 &&
             mouseX < width / 2 + 250 &&
             mouseY > height / 2 + 70 &&
-            mouseY < height / 2 + 90
+            mouseY < height / 2 + 120
         );
     }
 }

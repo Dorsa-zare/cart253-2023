@@ -2,8 +2,7 @@
  * Project 2 
  * Dorsa Zare
  * 
- * This is a template. You must fill in the title, author, 
- * and this description to match your project!
+ * This is a program where you can play mini games based on how you are feeling. 
  */
 
 "use strict";

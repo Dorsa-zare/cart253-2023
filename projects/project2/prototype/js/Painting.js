@@ -59,26 +59,26 @@ class Painting {
         // Check if the mouse is inside the wall image area
         if (
             mouseX > width / 2 - 550 &&
-            mouseX < width / 2 + 520 &&
+            mouseX < width / 2 + 530 &&
             mouseY > height / 2 - 220 &&
             mouseY < height / 2 + 190
         ) {
             // Draw a new pink square at the current mouse position with an offset of 35 to the left and 5 to the top
-            let newSquare = createVector(constrain(mouseX - 35, width / 2 - 550, width / 2 + 515), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
+            let newSquare = createVector(constrain(mouseX - 35, width / 2 - 550, width / 2 + 460), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
             rect(newSquare.x, newSquare.y, 70, 10);
             this.paintedSquares.push(newSquare);
 
             // Draw additional squares between the current and previous mouse positions
             let numAdditionalSquares = 30; // number of additional squares
             let previousPoint = createVector(pmouseX - 10, pmouseY - 5);
-            let currentPoint = createVector(constrain(mouseX - 10, width / 2 - 550, width / 2 + 515), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
+            let currentPoint = createVector(constrain(mouseX - 10, width / 2 - 550, width / 2 + 460), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
 
             for (let i = 0; i < numAdditionalSquares; i++) {
                 let t = map(i, 0, numAdditionalSquares - 1, 0, 1);
                 let inBetweenX = lerp(previousPoint.x, currentPoint.x, t) - 20;
                 let inBetweenY = lerp(previousPoint.y, currentPoint.y, t); - 20
                 rect(inBetweenX, inBetweenY, 70, 10);
-                this.paintedSquares.push(createVector(constrain(inBetweenX, width / 2 - 550, width / 2 + 515), constrain(inBetweenY, height / 2 - 220, height / 2 + 190)));
+                this.paintedSquares.push(createVector(constrain(inBetweenX, width / 2 - 550, width / 2 + 460), constrain(inBetweenY, height / 2 - 220, height / 2 + 190)));
             }
         }
         // Use the user's mouse position to display the roller image
@@ -98,10 +98,10 @@ class Painting {
     mousePressed() {
         // Check if the mouse is pressed on the "Next" button
         if (
-            mouseX > width / 2 + 250 &&
-            mouseX < width / 2 + 350 &&
-            mouseY > height / 2 + 170 &&
-            mouseY < height / 2 + 210
+            mouseX > width / 2 + 220 &&
+            mouseX < width / 2 + 370 &&
+            mouseY > height / 2 + 150 &&
+            mouseY < height / 2 + 240
         ) {
             // Toggle the state and update the button text 
             if (this.nextButtonText === "Next") {
