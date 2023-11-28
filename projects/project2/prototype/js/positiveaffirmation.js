@@ -7,11 +7,11 @@ class PositiveAffirmation {
         this.petCustomization = petCustomization;
 
 
-        this.mySpeechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
-        this.mySpeechRec.onResult = showResult; // bind callback function to trcwhen speech is recognized
-        this.mySpeechRec.continuous = true
-        this.mySpeechRec.interimResults = true
-        this.mySpeechRec.start(); // start listening
+        // this.mySpeechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
+        // this.mySpeechRec.onResult = showResult; // bind callback function to trcwhen speech is recognized
+        // this.mySpeechRec.continuous = true
+        // this.mySpeechRec.interimResults = true
+        // this.mySpeechRec.start(); // start listening
 
         // Word-related properties
         this.words = [];
@@ -165,19 +165,19 @@ class PositiveAffirmation {
         // Display the selected words in the result state
         this.displaySelectedWords();
 
-        let lowerStr = "";
-        if (mySpeechRec.resultString) {
-            //     lowerStr = mySpeechRec.resultString.toLowerCase();    //turn what user says into lowercase 
-        }
+        // let lowerStr = "";
+        // if (mySpeechRec.resultString) {
+        //     //     lowerStr = mySpeechRec.resultString.toLowerCase();    //turn what user says into lowercase 
+        // }
 
-        let mostRecentWord = lowerStr.split(" ").pop();  //if user says I am then show text
-        if (lowerStr.includes("I am")) {
-            textSize(50);
-            textAlign(CENTER, CENTER);
-            fill(0);
-            text(`Good job!`, width / 2, height / 2);
+        // let mostRecentWord = lowerStr.split(" ").pop();  //if user says I am then show text
+        // if (lowerStr.includes("I am")) {
+        //     textSize(50);
+        //     textAlign(CENTER, CENTER);
+        //     fill(0);
+        //     text(`Good job!`, width / 2, height / 2);
 
-        }
+        // }
     }
 
 
@@ -219,6 +219,5 @@ class PositiveAffirmation {
                 }
             }
         }
-
 
     }
