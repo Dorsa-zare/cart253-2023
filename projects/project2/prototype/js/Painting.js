@@ -53,37 +53,47 @@ class Painting {
         noStroke();
         for (let i = 0; i < this.paintedSquares.length; i++) {
             let square = this.paintedSquares[i];
-            rect(square.x, square.y, 70, 30); // The size of the square 
+            rect(square.x, square.y, 70, 10); // The size of the square 
         }
+
         // Check if the mouse is inside the wall image area
         if (
-            mouseX > width / 2 - 510 &&
-            mouseX < width / 2 - 500 + 1080 &&
-            mouseY > height / 2 - 200 &&
-            mouseY < height / 2 - 200 + 400
+            mouseX > width / 2 - 550 &&
+            mouseX < width / 2 + 520 &&
+            mouseY > height / 2 - 220 &&
+            mouseY < height / 2 + 190
         ) {
-            // Draw a new pink square at the current mouse position with an offset of 30 to the left
-            let newSquare = createVector(mouseX - 40, mouseY - 30);
-            rect(newSquare.x, newSquare.y, 70, 30);
+            // Draw a new pink square at the current mouse position with an offset of 35 to the left and 5 to the top
+            let newSquare = createVector(constrain(mouseX - 35, width / 2 - 550, width / 2 + 515), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
+            rect(newSquare.x, newSquare.y, 70, 10);
             this.paintedSquares.push(newSquare);
 
             // Draw additional squares between the current and previous mouse positions
-            let numAdditionalSquares = 20; // number of additional squares
-            let previousPoint = createVector(pmouseX - 10, pmouseY - 30);
-            let currentPoint = createVector(mouseX - 10, mouseY - 30);
+            let numAdditionalSquares = 30; // number of additional squares
+            let previousPoint = createVector(pmouseX - 10, pmouseY - 5);
+            let currentPoint = createVector(constrain(mouseX - 10, width / 2 - 550, width / 2 + 515), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
 
             for (let i = 0; i < numAdditionalSquares; i++) {
                 let t = map(i, 0, numAdditionalSquares - 1, 0, 1);
-                let inBetweenX = lerp(previousPoint.x, currentPoint.x, t) - 30;
-                let inBetweenY = lerp(previousPoint.y, currentPoint.y, t);
-                rect(inBetweenX, inBetweenY, 70, 30);
-                this.paintedSquares.push(createVector(inBetweenX, inBetweenY));
+                let inBetweenX = lerp(previousPoint.x, currentPoint.x, t) - 20;
+                let inBetweenY = lerp(previousPoint.y, currentPoint.y, t); - 20
+                rect(inBetweenX, inBetweenY, 70, 10);
+                this.paintedSquares.push(createVector(constrain(inBetweenX, width / 2 - 550, width / 2 + 515), constrain(inBetweenY, height / 2 - 220, height / 2 + 190)));
             }
-
-            // Use the user's mouse position to display the roller image
-            image(this.rollerImage, mouseX - 70, mouseY - 40, 150, 150);
+        }
+        // Use the user's mouse position to display the roller image
+        image(this.rollerImage, mouseX - 70, mouseY - 40, 150, 150);
+        // Done button
+        image(this.buttonImage, width / 2 + 300, height / 2 + 150, 200, 200);
+        fill(0)
+        text('Done', width / 2 + 400, height / 2 + 250);
+        
+        // Only check for mouse press when the mouse button is pressed
+        if (mouseIsPressed) {
+            this.mousePressed();
         }
     }
+
 
     mousePressed() {
         // Check if the mouse is pressed on the "Next" button
@@ -101,5 +111,23 @@ class Painting {
                 this.state = "painting";
             }
         }
+    
+        // Check if the mouse is pressed on the "Done" button
+        if (
+            mouseX > width / 2 + 300 &&
+            mouseX < width / 2 + 500 &&
+            mouseY > height / 2 + 150 &&
+            mouseY < height / 2 + 350
+        ) {
+             // Handle the exit button click (transition back to emotions state)
+             this.handleMousePress();
+             
+            // Reset any other necessary variables or states
+            this.paintedSquares = []; // Reset the painted squares
+            this.nextButtonText = "Next"; // Reset the button text
+        }
     }
-}
+    handleMousePress() {
+        state = "emotions";
+    }
+}    

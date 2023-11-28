@@ -5,7 +5,7 @@ class Hello {
         this.buttonImage = loadImage("assets/images/button.png"); //Image of the button
         this.petX = -300; // Initial x-coordinate off-screen to the left
         this.petY = height / 2 - 100; // Initial y-coordinate
-        this.petSpeed = 5; // The speed of the pet's entrance
+        this.petSpeed = 7; // The speed of the pet's entrance
         this.petArrived = false; // Flag to track whether the pet has arrived
         this.words = ["Hello,", "I", "will", "be", "your", "emotional", "support", "pet!", "I", "will", "be", "accompanying", "you", "in", "your", "journey", "of", "feeling", "better!"];
         this.currentWordIndex = 0;
