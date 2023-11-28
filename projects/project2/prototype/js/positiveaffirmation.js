@@ -144,7 +144,7 @@ class PositiveAffirmation {
     }
 
     showResult() {
-        console.log(this.mySpeech.resultString); //Log what user says
+        console.log(this.mySpeechRec.resultString); //Log what user says
     }
 
     result() {
@@ -171,7 +171,8 @@ class PositiveAffirmation {
         }
 
         let mostRecentWord = lowerStr.split(" ").pop();  //if user says I am then show text
-        if (lowerStr.includes("I am")) {
+        this.showResult();
+        if (lowerStr.includes(this.selectedWords[0].toLowerCase() + " " + this.selectedWords[1].toLowerCase())) {
             textSize(50);
             textAlign(CENTER, CENTER);
             fill(0);
