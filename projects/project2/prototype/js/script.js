@@ -52,6 +52,7 @@ function preload() {
 */
 function setup() {
 
+    userStartAudio();
     createCanvas(windowWidth, windowHeight);
     title = new Title(titleBackgroundImage);
     petCustomization = new PetCustomization();

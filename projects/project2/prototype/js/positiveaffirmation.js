@@ -7,11 +7,11 @@ class PositiveAffirmation {
         this.petCustomization = petCustomization;
 
 
-        // this.mySpeechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
+        this.mySpeechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
         // this.mySpeechRec.onResult = showResult; // bind callback function to trcwhen speech is recognized
-        // this.mySpeechRec.continuous = true
-        // this.mySpeechRec.interimResults = true
-        // this.mySpeechRec.start(); // start listening
+        this.mySpeechRec.continuous = true
+        this.mySpeechRec.interimResults = true
+        this.mySpeechRec.start(); // start listening
 
         // Word-related properties
         this.words = [];
@@ -165,59 +165,59 @@ class PositiveAffirmation {
         // Display the selected words in the result state
         this.displaySelectedWords();
 
-        // let lowerStr = "";
-        // if (mySpeechRec.resultString) {
-        //     //     lowerStr = mySpeechRec.resultString.toLowerCase();    //turn what user says into lowercase 
-        // }
+        let lowerStr = "";
+        if (this.mySpeechRec.resultString) {
+            lowerStr = this.mySpeechRec.resultString.toLowerCase();    //turn what user says into lowercase 
+        }
 
-        // let mostRecentWord = lowerStr.split(" ").pop();  //if user says I am then show text
-        // if (lowerStr.includes("I am")) {
-        //     textSize(50);
-        //     textAlign(CENTER, CENTER);
-        //     fill(0);
-        //     text(`Good job!`, width / 2, height / 2);
-
-        // }
-    }
-
-
-        displaySelectedWords() {
-            // Display the selected words
+        let mostRecentWord = lowerStr.split(" ").pop();  //if user says I am then show text
+        if (lowerStr.includes("I am")) {
             textSize(50);
             textAlign(CENTER, CENTER);
             fill(0);
+            text(`Good job!`, width / 2, height / 2);
 
-            const word1 = this.selectedWords[0] || "Selected Word 1";
-            const word2 = this.selectedWords[1] || "Selected Word 2";
-            text(word1, width / 2 + 60, height / 2 + 10);
-            text(word2, width / 2 + 250, height / 2 + 10);
         }
+    }
+
+
+    displaySelectedWords() {
+        // Display the selected words
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        fill(0);
+
+        const word1 = this.selectedWords[0] || "Selected Word 1";
+        const word2 = this.selectedWords[1] || "Selected Word 2";
+        text(word1, width / 2 + 60, height / 2 + 10);
+        text(word2, width / 2 + 250, height / 2 + 10);
+    }
 
 
 
 
-        displayWords() {
-            // Display the set of positive words on the right side
-            textSize(25);
-            textAlign(CENTER, CENTER);
+    displayWords() {
+        // Display the set of positive words on the right side
+        textSize(25);
+        textAlign(CENTER, CENTER);
 
-            for (let i = 0; i < this.words.length; i++) {
-                // Draw background color for each word
-                fill(this.wordBackgroundColors[i]);
-                rect(this.words[i].x - textWidth(this.words[i].text) / 2 - 5, this.words[i].y - 15, textWidth(this.words[i].text) + 10, 30);
+        for (let i = 0; i < this.words.length; i++) {
+            // Draw background color for each word
+            fill(this.wordBackgroundColors[i]);
+            rect(this.words[i].x - textWidth(this.words[i].text) / 2 - 5, this.words[i].y - 15, textWidth(this.words[i].text) + 10, 30);
 
-                if (this.isDraggingWord && this.draggedWordIndex === i) {
-                    // Draw the dragged word at the current mouse position
-                    fill(this.wordBackgroundColors[this.draggedWordIndex]);
-                    rect(mouseX - textWidth(this.words[i].text) / 2 - 5, mouseY - 15, textWidth(this.words[i].text) + 10, 30);
-                    fill(0);
-                    text(this.words[i].text, mouseX, mouseY);
-                } else {
-                    // Draw the word at its original position
-                    fill(0);
-                    text(this.words[i].text, this.words[i].x, this.words[i].y);
-                }
+            if (this.isDraggingWord && this.draggedWordIndex === i) {
+                // Draw the dragged word at the current mouse position
+                fill(this.wordBackgroundColors[this.draggedWordIndex]);
+                rect(mouseX - textWidth(this.words[i].text) / 2 - 5, mouseY - 15, textWidth(this.words[i].text) + 10, 30);
+                fill(0);
+                text(this.words[i].text, mouseX, mouseY);
+            } else {
+                // Draw the word at its original position
+                fill(0);
+                text(this.words[i].text, this.words[i].x, this.words[i].y);
             }
         }
-
     }
+
+}
