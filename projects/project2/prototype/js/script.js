@@ -2,74 +2,74 @@
  * Project 2 
  * Dorsa Zare
  * 
- * This is a program where you can play mini games based on how you are feeling. 
+ * This program allows you to play mini games based on your emotions.
  */
 
 "use strict";
 
-let state = "title"; //Starting the game in title state
-let title; // The class that displays the title
-let petCustomization; //The state where user can choose prefered pet image
-let petImages = []; //The 4 images of the pets
-let chosenPet; //The pet that the user has chosen which will be showin in the next levels
-let hello; //the state that the chosen pet says hello
-let emotions; //the stat that shows emotions menu
+let state = "title"; // Game state: starting with the title screen
+let title; // Handles the display of the title screen
+let petCustomization; // Allows the user to choose a pet image
+let petImages = []; // Stores the 4 pet images
+let chosenPet; // The user's selected pet for the next levels
+let hello; // Displays a greeting from the chosen pet
+let emotions; // Displays the emotions menu
 let buttonImages = []; // Array to store button images
 let buttonText = []; // Array to store button text
-let titleBackgroundImage; //The background image for the title state
-let anxietyGame; // The class that handles the anxiety game
+let titleBackgroundImage; // Background image for the title screen
+let anxietyGame; // Handles the anxiety game
 let bubbleImages = []; // Array to store bubble images
 let bubbles = []; // Array to store bubble objects
-let tilesImage; //The image of tiles for background of bubble game
-let gameDuration; //Duration of the bubble game for anxiety
-let bubblePopSound; //Sound effect for bubble popping
-let positiveAffirmation; //The state which has the positive affirmation journal mini game
-let painting; //The state which has the painting mini game
-let happyPrompt; //Declaration of the class for Happy emotion
+let tilesImage; // Background image for the bubble game
+let gameDuration; // Duration of the anxiety game
+let bubblePopSound; // Sound effect for bubble popping
+let positiveAffirmation; // State for the positive affirmation journal mini-game
+let painting; // State for the painting mini-game
+let happyPrompt; // Class for the Happy emotion prompt
 
 /**
- * Description of preload
-*/
+ * Preload function to load necessary assets
+ */
 function preload() {
     // Load button images and text into arrays
     for (let i = 0; i < 4; i++) {
         buttonImages[i] = loadImage(`assets/images/button.png`);
     }
     buttonText = ["Anxious", "Discouraged", "Angry", "Happy"];
-    //The image for the background of title state  
+    // Load the title screen background image  
     titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
     // Load bubble images into the array
     bubbleImages[0] = loadImage(`assets/images/bubble.png`);
-    // Load tiles background image
+    // Load tiles background image for the bubble game
     tilesImage = loadImage(`assets/images/tiles.png`)
-    //Load bubble popping sound effect for the anxiety game
+    // Load bubble popping sound effect for the anxiety game
     bubblePopSound = loadSound('assets/sounds/bubblePop.mp3');
 }
 
-
 /**
- * Description of setup
-*/
+ * Setup function to initialize the game
+ */
 function setup() {
+    userStartAudio();  // Enable audio for user interaction
+    createCanvas(windowWidth, windowHeight); // Create a canvas with the dimensions of the window
 
-    userStartAudio();
-    createCanvas(windowWidth, windowHeight);
-    title = new Title(titleBackgroundImage);
-    petCustomization = new PetCustomization();
+    // Initialize and instantiate game components
+    title = new Title(titleBackgroundImage);   // Title screen
+    petCustomization = new PetCustomization();  // Pet customization screen
     petCustomization.preload();
     petCustomization.setup();
-    hello = new Hello(petCustomization);
-    emotions = new Emotions(petCustomization);
-    gameDuration = new GameDuration(); // Initialize gameDuration first
-    anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound, gameDuration.getDuration());
-    positiveAffirmation = new PositiveAffirmation();
-    painting = new Painting(petCustomization);
-    happyPrompt = new HappyPrompt(petCustomization);
+    hello = new Hello(petCustomization); // Greeting screen
+    emotions = new Emotions(petCustomization); // Emotions menu screen
+    gameDuration = new GameDuration();  // Game duration for anxiety game
+    anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound, gameDuration.getDuration());  // Anxiety game screen
+    positiveAffirmation = new PositiveAffirmation(); // Positive affirmation journal screen
+    painting = new Painting(petCustomization);  // Painting game screen
+    happyPrompt = new HappyPrompt(petCustomization);  // Happy emotion prompt screen
 }
 
 /**
- * Description of draw()
-*/
+ * Draw function to render the game based on the current state
+ */
 function draw() {
     if (state === "title") {
         title.display();
@@ -92,7 +92,9 @@ function draw() {
     }
 }
 
-
+/**
+ * MousePressed function to handle mouse click events based on the current state
+ */
 function mousePressed() {
     if (state === "title") {
         state = "customizePet";
@@ -114,6 +116,9 @@ function mousePressed() {
     }
 }
 
+/**
+ * MouseReleased function to handle mouse release events for specific states
+ */
 function mouseReleased() {
     if (state === "positiveAffirmation") {
         positiveAffirmation.mouseReleased();

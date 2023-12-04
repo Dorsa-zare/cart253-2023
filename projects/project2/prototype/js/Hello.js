@@ -1,20 +1,21 @@
 class Hello {
     constructor(petCustomization) {
         this.petCustomization = petCustomization;
-        this.backgroundImage = loadImage("assets/images/naturecloseup.png");
-        this.buttonImage = loadImage("assets/images/button.png"); //Image of the button
+        this.backgroundImage = loadImage("assets/images/naturecloseup.png"); // Background image for the greeting screen
+        this.buttonImage = loadImage("assets/images/button.png"); // Image of the button
         this.petX = -300; // Initial x-coordinate off-screen to the left
         this.petY = height / 2 - 100; // Initial y-coordinate
         this.petSpeed = 7; // The speed of the pet's entrance
         this.petArrived = false; // Flag to track whether the pet has arrived
         this.words = ["Hello,", "I", "will", "be", "your", "emotional", "support", "pet!", "I", "will", "be", "accompanying", "you", "in", "your", "journey", "of", "feeling", "better!"];
         this.currentWordIndex = 0;
-        this.displayedText = "";
+        this.displayedText = ""; // Text displayed above the pet's head
         this.typingSpeed = 200; // Speed of typing in milliseconds
-        this.typingTimer = 0;
+        this.typingTimer = 0; // Timer to control typing speed
         this.showPressToStart = false; // Flag to track whether to display "Press mouse to start"
     }
 
+    //Display method to show the greeting screen
     display() {
         // Display the background image
         background(this.backgroundImage);
@@ -54,12 +55,13 @@ class Hello {
             textSize(20);
             text("Press mouse to start", width / 2 + 300, height / 2);
         } else if (this.showPressToStart) {
-            image(this.buttonImage, width / 2 + 150, height / 2 - 125 , 300, 250);
+            image(this.buttonImage, width / 2 + 150, height / 2 - 125, 300, 250);
             textSize(20);
             text("Press mouse to start", width / 2 + 300, height / 2);
         }
     }
 
+    // Handle mouse press to transition to the emotions screen
     handleMousePress() {
         if (this.showPressToStart) {
             state = "emotions";

@@ -1,14 +1,16 @@
 class Emotions {
     constructor(petCustomization) {
-        this.petCustomization = petCustomization;
-        this.backgroundImage = loadImage("assets/images/nature.png");
+        this.petCustomization = petCustomization; //The customized pet
+        this.backgroundImage = loadImage("assets/images/nature.png"); //Load the background image
     }
 
 
     display() {
+        //Background image for the emotions menu
         background(this.backgroundImage);
-
+        //Display the chosen pet
         image(this.petCustomization.chosenPet, width / 2 - 400, height / 2 - 150, 400, 400);
+        //Display the question
         textSize(28);
         textAlign(CENTER, CENTER);
         fill(0);
@@ -33,13 +35,13 @@ class Emotions {
             // Set the state to "painting"
             state = "painting";
         } else if (this.isHappyOptionClicked()) {
-            // Set the state to the desired state for the "Happy" emotion
-            // For example, you can set it to a new game or state called "happyGame"
+            // Set the state to "happyPrompt"
             state = "happyPrompt";
         }
     }
 
 
+    //Checks if Anxious is clicked on
     isAnxiousOptionClicked() {
         return (
             mouseX > width / 2 + 50 &&
@@ -48,7 +50,7 @@ class Emotions {
             mouseY < height / 2 - 75
         );
     }
-
+    //Checks if Discouraged is clicked on
     isDiscouragedOptionClicked() {
         return (
             mouseX > width / 2 + 50 &&
@@ -57,22 +59,24 @@ class Emotions {
             mouseY < height / 2 + 20
         );
     }
+    //Checks if Angry is clicked on
     isAngryOptionClicked() {
         return (
             mouseX > width / 2 + 50 &&
             mouseX < width / 2 + 300 &&
-            mouseY > height / 2 + 70 &&
-            mouseY < height / 2 + 120
+            mouseY > height / 2 + 60 &&
+            mouseY < height / 2 + 130
         );
     }
+    //Checks if happy is clicked on
     isHappyOptionClicked() {
-    return (
-        mouseX > width / 2 + 50 &&
-        mouseX < width / 2 + 300 &&
-        mouseY > height / 2 + 150 &&
-        mouseY < height / 2 + 250
-    );
-}
+        return (
+            mouseX > width / 2 + 50 &&
+            mouseX < width / 2 + 300 &&
+            mouseY > height / 2 + 150 &&
+            mouseY < height / 2 + 250
+        );
+    }
 
 }
 
