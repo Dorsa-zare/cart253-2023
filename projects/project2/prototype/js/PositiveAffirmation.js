@@ -2,9 +2,11 @@ class PositiveAffirmation {
     constructor() {
         // Initial state and assets
         this.state = "prompt";
-        this.backgroundImage = loadImage("assets/images/journal.png");
-        this.resultbackgroundImage = loadImage("assets/images/resultbg.png");
-        this.petCustomization = petCustomization;
+        this.backgroundImage = loadImage("assets/images/journal.png"); //The background image of the prompt state
+        this.resultbackgroundImage = loadImage("assets/images/resultbg.png"); // The background for result state 
+        this.celebrationImage = loadImage("assets/images/celebration.png"); //The background for celebration image in teh result 
+        this.petCustomization = petCustomization; //the customized pet image
+        this.buttonImage = loadImage("assets/images/button.png"); // button image
 
 
         this.mySpeechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
@@ -66,62 +68,6 @@ class PositiveAffirmation {
     }
 
 
-    mousePressed() {
-        // Check if the user clicked on a word and set the draggedWordIndex
-        for (let i = 0; i < this.words.length; i++) {
-            if (
-                mouseX > this.words[i].x - textWidth(this.words[i].text) / 2 - 5 &&
-                mouseX < this.words[i].x + textWidth(this.words[i].text) / 2 + 5 &&
-                mouseY > this.words[i].y - 15 &&
-                mouseY < this.words[i].y + 15
-            ) {
-                this.isDraggingWord = true;
-                this.draggedWordIndex = i;
-            }
-        }
-        // Check if the user clicked on the "See Result" button
-        if (
-            mouseX > width / 2 - 425 &&
-            mouseX < width / 2 - 275 &&
-            mouseY > height / 2 + 100 &&
-            mouseY < height / 2 + 140
-        ) {
-            // Change the state to "result" if the button is clicked
-            this.result();
-        }
-    }
-
-
-    mouseReleased() {
-        // Check if a word is being dragged and released
-        if (this.isDraggingWord && this.draggedWordIndex !== -1) {
-            // Update the x and y coordinates of the dragged word based on the mouse release position
-            let releasedX = mouseX - textWidth(this.words[this.draggedWordIndex].text) / 2;
-            let releasedY;
-
-            // Check if the mouse is released inside the first or second rectangle
-            if ((mouseX > 600 && mouseX < 750) && ((mouseY > 200 && mouseY < 255) || (mouseY > 310 && mouseY < 365))) {
-                releasedY = (mouseY > 200 && mouseY < 255) ? 227 : 340;
-                this.words[this.draggedWordIndex].x = 700 - textWidth(this.words[this.draggedWordIndex].text) / 2;
-                this.words[this.draggedWordIndex].y = releasedY;
-
-                // Capture the selected word in the appropriate slot
-                const selectedWord = this.words[this.draggedWordIndex].text;
-                if (releasedY === 227) {
-                    // Top rectangle
-                    this.selectedWords[0] = selectedWord;
-                } else {
-                    // Bottom rectangle
-                    this.selectedWords[1] = selectedWord;
-                }
-            }
-
-            // Reset dragging flags
-            this.isDraggingWord = false;
-            this.draggedWordIndex = -1;
-        }
-    }
-
 
     getSelectedWord(x, y) {
         // Check for selected words during dragging
@@ -170,17 +116,34 @@ class PositiveAffirmation {
             lowerStr = this.mySpeechRec.resultString.toLowerCase();    //turn what user says into lowercase 
         }
 
-        let mostRecentWord = lowerStr.split(" ").pop();  //if user says I am then show text
+        let mostRecentWord = lowerStr.split(" ").pop();  //if the user says the affirmation then show celebration text
         this.showResult();
         if (lowerStr.includes(this.selectedWords[0].toLowerCase() + " " + this.selectedWords[1].toLowerCase())) {
-            textSize(50);
-            textAlign(CENTER, CENTER);
-            fill(0);
-            text(`Good job!`, width / 2, height / 2);
-
+            this.celebration();
         }
     }
 
+    celebration() {
+        background(this.celebrationImage);
+        image(this.petCustomization.chosenPet, width / 2 - 400, height / 2 - 80, 370, 370);
+        textSize(50);
+        textAlign(CENTER, CENTER);
+        fill(0);
+        text(`Good job!`, width / 2 + 250, height / 2 - 100);
+
+        //Display the exit button 
+        this.displayExitButton();
+
+    }
+
+    displayExitButton() {
+        image(this.buttonImage, width / 2 - 600, height / 2 + 100, 200, 200); // The image of the exit button
+        // Display the exit text
+        textSize(30);
+        textAlign(CENTER, CENTER);
+        fill(0);
+        text("Exit", width / 2 - 500, height / 2 + 200);
+    }
 
     displaySelectedWords() {
         // Display the selected words
@@ -193,9 +156,6 @@ class PositiveAffirmation {
         text(word1, width / 2 + 60, height / 2 + 10);
         text(word2, width / 2 + 250, height / 2 + 10);
     }
-
-
-
 
     displayWords() {
         // Display the set of positive words on the right side
@@ -221,4 +181,77 @@ class PositiveAffirmation {
         }
     }
 
+
+    mousePressed() {
+        // Check if the user clicked on a word and set the draggedWordIndex
+        for (let i = 0; i < this.words.length; i++) {
+            if (
+                mouseX > this.words[i].x - textWidth(this.words[i].text) / 2 - 5 &&
+                mouseX < this.words[i].x + textWidth(this.words[i].text) / 2 + 5 &&
+                mouseY > this.words[i].y - 15 &&
+                mouseY < this.words[i].y + 15
+            ) {
+                this.isDraggingWord = true;
+                this.draggedWordIndex = i;
+            }
+        }
+        // Check if the user clicked on the "See Result" button
+        if (
+            mouseX > width / 2 - 425 &&
+            mouseX < width / 2 - 275 &&
+            mouseY > height / 2 + 100 &&
+            mouseY < height / 2 + 140
+        ) {
+            // Change the state to "result" if the button is clicked
+            this.result();
+        }
+        // Check if the user is in the "celebration" state and clicked on the exit button
+        if (this.state === "celebration") {
+            const exitButtonX = width / 2 - 500;
+            const exitButtonY = height / 2 + 100;
+            const exitButtonWidth = 200;
+            const exitButtonHeight = 200;
+
+            if (
+                mouseX > exitButtonX &&
+                mouseX < exitButtonX + exitButtonWidth &&
+                mouseY > exitButtonY &&
+                mouseY < exitButtonY + exitButtonHeight
+            ) {
+                // Change the state to "emotions" when the exit button is clicked in the "celebration" state
+                this.state = "emotions";
+            }
+        }
+    }
+
+
+    mouseReleased() {
+        // Check if a word is being dragged and released
+        if (this.isDraggingWord && this.draggedWordIndex !== -1) {
+            // Update the x and y coordinates of the dragged word based on the mouse release position
+            let releasedX = mouseX - textWidth(this.words[this.draggedWordIndex].text) / 2;
+            let releasedY;
+
+            // Check if the mouse is released inside the first or second rectangle
+            if ((mouseX > 600 && mouseX < 750) && ((mouseY > 200 && mouseY < 255) || (mouseY > 310 && mouseY < 365))) {
+                releasedY = (mouseY > 200 && mouseY < 255) ? 227 : 340;
+                this.words[this.draggedWordIndex].x = 700 - textWidth(this.words[this.draggedWordIndex].text) / 2;
+                this.words[this.draggedWordIndex].y = releasedY;
+
+                // Capture the selected word in the appropriate slot
+                const selectedWord = this.words[this.draggedWordIndex].text;
+                if (releasedY === 227) {
+                    // Top rectangle
+                    this.selectedWords[0] = selectedWord;
+                } else {
+                    // Bottom rectangle
+                    this.selectedWords[1] = selectedWord;
+                }
+            }
+
+            // Reset dragging flags
+            this.isDraggingWord = false;
+            this.draggedWordIndex = -1;
+        }
+    }
 }

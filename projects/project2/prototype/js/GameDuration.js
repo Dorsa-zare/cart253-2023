@@ -33,7 +33,7 @@ class GameDuration {
             mouseY < height / 2 + 200
             
         ) {
-            this.playDuration = 10;
+            this.playDuration = 30;
             console.log("Starting timer")
             anxietyGame.startTimer();
             state = "anxietyGame"; // Set the state to "anxietyGame" after handling the selection

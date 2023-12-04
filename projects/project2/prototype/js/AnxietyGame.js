@@ -59,11 +59,6 @@ class AnxietyGame {
             }
         }
 
-        // console.log(gameDuration.startTime + gameDuration.playDuration * 1000, millis());
-        // // Check if the play duration is reached
-        // if (gameDuration.startTime + gameDuration.playDuration * 1000 > millis()) {
-        //     state = "emotions"; // Transition back to emotions state
-        // }
     }
     // Function to handle mouse press in the AnxietyGame state
     mousePressed() {
