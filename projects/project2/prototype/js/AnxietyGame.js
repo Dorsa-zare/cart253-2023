@@ -1,16 +1,14 @@
 class AnxietyGame {
     constructor(tilesImage, bubbleImages, bubblePopSound, gameDuration) {
         this.backgroundImage = loadImage("assets/images/bathroom.png"); // Background image
-        this.bubbleImages = bubbleImages;
-        this.bubblePopSound = bubblePopSound;
+        this.bubbleImages = bubbleImages; //Image of teh bubbles
+        this.bubblePopSound = bubblePopSound; //The bubble popping sound
         this.bubbles = [];
         this.buttonImage = loadImage("assets/images/button.png"); // button image
-
         this.createBubbles();
-        // this.startTime = millis()
-
     }
 
+    //Starts the timer so the game will stop at the time the suer selected
     startTimer() {
         console.log(gameDuration.playDuration);
         setTimeout(() => {
@@ -18,18 +16,20 @@ class AnxietyGame {
         }, gameDuration.playDuration * 1000);
     }
 
+    // Create individual bubble objects
     createBubbles() {
-        // Create individual bubble objects
         for (let i = 0; i < 30; i++) {
             let bubble = new Bubble(random(width), height + random(20, height));
             this.bubbles.push(bubble);
         }
     }
 
+    //Displays the anxiety game including the bubbles 
     display() {
+        //use the loaded background image
         background(this.backgroundImage);
-
-        image(this.buttonImage, width / 2 + 410, height / 2 - 330, 180, 180); // The image of the exit button
+        // The image of the exit button
+        image(this.buttonImage, width / 2 + 410, height / 2 - 330, 180, 180);
 
         // Display the title and the options text
         textSize(30);
@@ -73,7 +73,7 @@ class AnxietyGame {
     }
 
     handleMousePress() {
-        state = "emotions";
+        state = "emotions"; //If mouse is pressed change state to emotions
     }
 }
 

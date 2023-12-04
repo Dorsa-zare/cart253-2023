@@ -39,10 +39,9 @@ class HappyPrompt {
             for (let i = 0; i < this.sentences.length; i++) {
                 text(this.sentences[i], width / 2, 100 + i * 50);
             }
-
             image(this.buttonImage, width / 2 + 300, height / 2 - 125, 200, 200);
             textSize(20);
-            text("Exit", width / 2 + 400, height / 2 - 20 );
+            text("Exit", width / 2 + 400, height / 2 - 20);
         }
     }
 

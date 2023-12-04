@@ -12,17 +12,19 @@ class PetCustomization {
         }
     }
 
-    setup() {
-    }
 
+    //Display the main text, images and labels
     draw() {
-        background(this.backgroundImage); //Background image which is a sky illustration
+        //Background image which is a sky illustration
+        background(this.backgroundImage);
+        //Display the text
         textSize(28);
         textAlign(CENTER, CENTER);
         fill(0);
         text(` Choose your emotional support pet's look
             to make it your own! `, width / 2, height / 2 - 200);
 
+        //Display the image of teh pets and their label
         this.displayPetImages();
         this.displayPetLabels();
     }

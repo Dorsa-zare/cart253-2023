@@ -57,7 +57,6 @@ function setup() {
     title = new Title(titleBackgroundImage);   // Title screen
     petCustomization = new PetCustomization();  // Pet customization screen
     petCustomization.preload();
-    petCustomization.setup();
     hello = new Hello(petCustomization); // Greeting screen
     emotions = new Emotions(petCustomization); // Emotions menu screen
     gameDuration = new GameDuration();  // Game duration for anxiety game

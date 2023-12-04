@@ -222,7 +222,7 @@ class PositiveAffirmation {
             mouseY > height / 2 + 100 &&
             mouseY < height / 2 + 300
         ) {
-            // Change the state to "prompt" when the exit button is clicked in the "celebration" state
+            // Change the state to "emotions" when the exit button is clicked 
             state = `emotions`;
         }
     }
