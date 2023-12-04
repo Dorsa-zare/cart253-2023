@@ -1,5 +1,4 @@
-# Template p5 project
-Artist’s Statement: Emotional Support Pet
+# Artist’s Statement: Emotional Support Pet
 
 Emotional Support Pet is my digital creation crafted to  offer comfort during challenging moments, specifically tailored for fellow university students navigating a spectrum of emotions. This game provides a calm space for reflection and emotional relief without the need for spoken words.
 
