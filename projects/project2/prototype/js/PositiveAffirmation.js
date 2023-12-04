@@ -22,7 +22,7 @@ class PositiveAffirmation {
         this.isDraggingWord = false;
 
         // Create word objects
-        const wordList = ["I am", "Loved", "Strong", "Rich", "Calm", "happy", "Brave"];
+        const wordList = ["I am", "Loved", "Strong", "Rich", "Calm", "Happy", "Brave"];
         for (let i = 0; i < wordList.length; i++) {
             this.words.push({
                 text: wordList[i],
