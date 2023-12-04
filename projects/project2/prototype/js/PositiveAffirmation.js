@@ -51,7 +51,7 @@ class PositiveAffirmation {
             textSize(30);
             textAlign(CENTER, CENTER);
             fill(0);
-            text("Welcome to the Positive Affirmation Journals!", width / 2 - 200, height / 2 - 210);
+            text("Welcome to the Positive Affirmation Journal!", width / 2 - 200, height / 2 - 210);
             textSize(18);
             text('Create your own positive affirmation.', width / 2 - 350, height / 2 - 40);
             textSize(15);
@@ -134,6 +134,7 @@ class PositiveAffirmation {
     celebration() {
         background(this.celebrationImage); //Bacckground image 
         image(this.petCustomization.chosenPet, width / 2 - 400, height / 2 - 80, 370, 370); //Display chosen pet
+        this.mySpeechRec.stop();
         textSize(50); // Display the text
         textAlign(CENTER, CENTER);
         fill(0);
