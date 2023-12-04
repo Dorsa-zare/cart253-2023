@@ -2,18 +2,17 @@ class PositiveAffirmation {
     constructor() {
         // Initial state and assets
         this.state = "prompt";
-        this.backgroundImage = loadImage("assets/images/journal.png"); //The background image of the prompt state
-        this.resultbackgroundImage = loadImage("assets/images/resultbg.png"); // The background for result state 
-        this.celebrationImage = loadImage("assets/images/celebration.png"); //The background for celebration image in teh result 
-        this.petCustomization = petCustomization; //the customized pet image
-        this.buttonImage = loadImage("assets/images/button.png"); // button image
+        this.backgroundImage = loadImage("assets/images/journal.png"); // The background image of the prompt state
+        this.resultbackgroundImage = loadImage("assets/images/resultbg.png"); // The background for the result state
+        this.celebrationImage = loadImage("assets/images/celebration.png"); // The background for the celebration image in the result
+        this.petCustomization = petCustomization; // The customized pet image
+        this.buttonImage = loadImage("assets/images/button.png"); // Button image
 
-
-        this.mySpeechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
-        // this.mySpeechRec.onResult = showResult; // bind callback function to trcwhen speech is recognized
-        this.mySpeechRec.continuous = true
-        this.mySpeechRec.interimResults = true
-        this.mySpeechRec.start(); // start listening
+        // Speech recognition setup
+        this.mySpeechRec = new p5.SpeechRec();
+        this.mySpeechRec.continuous = true;
+        this.mySpeechRec.interimResults = true;
+        this.mySpeechRec.start(); // Start listening
 
         // Word-related properties
         this.words = [];
@@ -33,7 +32,18 @@ class PositiveAffirmation {
         }
     }
 
+    // Display the current state
+    display() {
+        if (this.state === "prompt") {
+            this.prompt();
+        } else if (this.state === "result") {
+            this.result();
+        } else if (this.state === "celebration") {
+            this.celebration();
+        }
+    }
 
+    // State: Prompt
     prompt() {
         if (this.state === "prompt") {
             // Display the prompt state
@@ -66,8 +76,6 @@ class PositiveAffirmation {
 
         }
     }
-
-
 
     getSelectedWord(x, y) {
         // Check for selected words during dragging
@@ -124,9 +132,9 @@ class PositiveAffirmation {
     }
 
     celebration() {
-        background(this.celebrationImage);
-        image(this.petCustomization.chosenPet, width / 2 - 400, height / 2 - 80, 370, 370);
-        textSize(50);
+        background(this.celebrationImage); //Bacckground image 
+        image(this.petCustomization.chosenPet, width / 2 - 400, height / 2 - 80, 370, 370); //Display chosen pet
+        textSize(50); // Display the text
         textAlign(CENTER, CENTER);
         fill(0);
         text(`Good job!`, width / 2 + 250, height / 2 - 100);
@@ -156,6 +164,9 @@ class PositiveAffirmation {
         text(word1, width / 2 + 60, height / 2 + 10);
         text(word2, width / 2 + 250, height / 2 + 10);
     }
+
+
+
 
     displayWords() {
         // Display the set of positive words on the right side
@@ -205,22 +216,14 @@ class PositiveAffirmation {
             // Change the state to "result" if the button is clicked
             this.result();
         }
-        // Check if the user is in the "celebration" state and clicked on the exit button
-        if (this.state === "celebration") {
-            const exitButtonX = width / 2 - 500;
-            const exitButtonY = height / 2 + 100;
-            const exitButtonWidth = 200;
-            const exitButtonHeight = 200;
-
-            if (
-                mouseX > exitButtonX &&
-                mouseX < exitButtonX + exitButtonWidth &&
-                mouseY > exitButtonY &&
-                mouseY < exitButtonY + exitButtonHeight
-            ) {
-                // Change the state to "emotions" when the exit button is clicked in the "celebration" state
-                this.state = "emotions";
-            }
+        if (
+            mouseX > width / 2 - 600 &&
+            mouseX < width / 2 - 400 &&
+            mouseY > height / 2 + 100 &&
+            mouseY < height / 2 + 300
+        ) {
+            // Change the state to "prompt" when the exit button is clicked in the "celebration" state
+            state = `emotions`;
         }
     }
 
@@ -254,4 +257,5 @@ class PositiveAffirmation {
             this.draggedWordIndex = -1;
         }
     }
+
 }
