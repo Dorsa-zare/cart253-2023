@@ -2,7 +2,8 @@
  * Project 2 
  * Dorsa Zare
  * 
- * This program allows you to play mini games based on your emotions.
+ *Emotional Support Pet is aiming to provide comfort for people dealing with various emotions. The game suggests uncomplicated activities like bubble-popping for anxiety, a positive affirmation journal for feeling down, and a calming wall-painting experience for anger.
+Users can personalize their virtual companion, and all visuals are my own creations, carefully selected to evoke positive emotions. The game encourages users to confront their feelings, accept themselves, and hopefully, feel a bit better.
  */
 
 "use strict";
