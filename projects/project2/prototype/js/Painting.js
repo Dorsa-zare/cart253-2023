@@ -127,6 +127,6 @@ class Painting {
         }
     }
     handleMousePress() {
-        state = "emotions"; // Transition back to emotions state if user clicked 
+        state = "emotions"; // Transition back to emotions state if user clicked on exit
     }
 }
