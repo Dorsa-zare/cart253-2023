@@ -1,15 +1,15 @@
 class Painting {
     constructor(petCustomization) {
         // Initialize the state and set up necessary assets
-        this.state = "prompt";
-        this.petCustomization = petCustomization; //The class that handles pet customization
+        this.state = "prompt"; // Initial state of the painting
+        this.petCustomization = petCustomization; // The class that handles pet customization
         this.backgroundImagePrompt = loadImage("assets/images/room.png"); // Background image for the prompt state
         this.backgroundImagePainting = loadImage("assets/images/paintingbg.png"); // Background image for painting
-        this.buttonImage = loadImage("assets/images/button.png"); //Image of the button
+        this.buttonImage = loadImage("assets/images/button.png"); // Image of the button
         this.rollerImage = loadImage("assets/images/roller.png"); // Image of roller to use as the mouse 
-        this.wallImage = loadImage("assets/images/wall.png"); //Image of the wall which will be painted on
-        this.nextButtonText = "Next"; //the text to be used on the button
-        this.paintedSquares = []; //The squares that are used for the painting effect
+        this.wallImage = loadImage("assets/images/wall.png"); // Image of the wall which will be painted on
+        this.nextButtonText = "Next"; // Text to be displayed on the button
+        this.paintedSquares = []; // The squares that are used for the painting effect
     }
 
     display() {
@@ -61,24 +61,24 @@ class Painting {
             mouseX > width / 2 - 550 &&
             mouseX < width / 2 + 530 &&
             mouseY > height / 2 - 220 &&
-            mouseY < height / 2 + 190
+            mouseY < height / 2 + 185
         ) {
             // Draw a new pink square at the current mouse position with an offset of 35 to the left and 5 to the top
-            let newSquare = createVector(constrain(mouseX - 35, width / 2 - 550, width / 2 + 460), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
+            let newSquare = createVector(constrain(mouseX - 35, width / 2 - 550, width / 2 + 460), constrain(mouseY - 5, height / 2 - 220, height / 2 + 185));
             rect(newSquare.x, newSquare.y, 70, 10);
             this.paintedSquares.push(newSquare);
 
             // Draw additional squares between the current and previous mouse positions
-            let numAdditionalSquares = 30; // number of additional squares
+            let numAdditionalSquares = 10; // number of additional squares
             let previousPoint = createVector(pmouseX - 10, pmouseY - 5);
-            let currentPoint = createVector(constrain(mouseX - 10, width / 2 - 550, width / 2 + 460), constrain(mouseY - 5, height / 2 - 220, height / 2 + 190));
+            let currentPoint = createVector(constrain(mouseX - 10, width / 2 - 550, width / 2 + 460), constrain(mouseY - 5, height / 2 - 220, height / 2 + 185));
 
             for (let i = 0; i < numAdditionalSquares; i++) {
                 let t = map(i, 0, numAdditionalSquares - 1, 0, 1);
                 let inBetweenX = lerp(previousPoint.x, currentPoint.x, t) - 20;
-                let inBetweenY = lerp(previousPoint.y, currentPoint.y, t); - 20
+                let inBetweenY = lerp(previousPoint.y, currentPoint.y, t) - 20; // Corrected the typo here
                 rect(inBetweenX, inBetweenY, 70, 10);
-                this.paintedSquares.push(createVector(constrain(inBetweenX, width / 2 - 550, width / 2 + 460), constrain(inBetweenY, height / 2 - 220, height / 2 + 190)));
+                this.paintedSquares.push(createVector(constrain(inBetweenX, width / 2 - 550, width / 2 + 460), constrain(inBetweenY, height / 2 - 220, height / 2 + 185)));
             }
         }
         // Use the user's mouse position to display the roller image
@@ -93,7 +93,6 @@ class Painting {
             this.mousePressed();
         }
     }
-
 
     mousePressed() {
         // Check if the mouse is pressed on the "Next" button
@@ -128,6 +127,6 @@ class Painting {
         }
     }
     handleMousePress() {
-        state = "emotions";
+        state = "emotions"; // Transition back to emotions state
     }
-}    
+}
