@@ -8,7 +8,7 @@ class PositiveAffirmation {
         this.petCustomization = petCustomization; // The customized pet image
         this.buttonImage = loadImage("assets/images/button.png"); // Button image
 
-        // Speech recognition setup
+        // Speech recognition setup (Recieved help from TA and professor to fix this function)
         this.mySpeechRec = new p5.SpeechRec();
         this.mySpeechRec.continuous = true;
         this.mySpeechRec.interimResults = true;

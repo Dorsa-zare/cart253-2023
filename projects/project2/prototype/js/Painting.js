@@ -76,7 +76,7 @@ class Painting {
             for (let i = 0; i < numAdditionalSquares; i++) {
                 let t = map(i, 0, numAdditionalSquares - 1, 0, 1);
                 let inBetweenX = lerp(previousPoint.x, currentPoint.x, t) - 20;
-                let inBetweenY = lerp(previousPoint.y, currentPoint.y, t) - 20; // Corrected the typo here
+                let inBetweenY = lerp(previousPoint.y, currentPoint.y, t) - 20; 
                 rect(inBetweenX, inBetweenY, 70, 10);
                 this.paintedSquares.push(createVector(constrain(inBetweenX, width / 2 - 550, width / 2 + 460), constrain(inBetweenY, height / 2 - 220, height / 2 + 185)));
             }
@@ -127,6 +127,6 @@ class Painting {
         }
     }
     handleMousePress() {
-        state = "emotions"; // Transition back to emotions state
+        state = "emotions"; // Transition back to emotions state if user clicked on exit
     }
 }

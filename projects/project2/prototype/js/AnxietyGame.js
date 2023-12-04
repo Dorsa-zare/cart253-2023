@@ -44,7 +44,9 @@ class AnxietyGame {
 
         // Only create new bubbles if the game duration is not 30 seconds
         for (let bubble of this.bubbles) {
+            //move teh bubbles
             bubble.move();
+            //Display the bubbles
             bubble.display();
 
             // Check if the bubble is clicked
