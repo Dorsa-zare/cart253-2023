@@ -1,6 +1,7 @@
 class PetCustomization {
     constructor() {
-        this.petImages = [];
+        this.backgroundImage = loadImage("assets/images/sky.png"); // The background image 
+        this.petImages = []; //The images of all the pets
         this.chosenPet = null;
     }
 
@@ -15,7 +16,7 @@ class PetCustomization {
     }
 
     draw() {
-        background(180, 200, 150);
+        background(this.backgroundImage); //Background image which is a sky illustration
         textSize(28);
         textAlign(CENTER, CENTER);
         fill(0);
@@ -26,6 +27,7 @@ class PetCustomization {
         this.displayPetLabels();
     }
 
+    //Display image of all the pets so teh user can choose
     displayPetImages() {
         image(this.petImages[1], 140, height / 2 - 130, 300, 300);
         image(this.petImages[2], 400, height / 2 - 140, 320, 320);
@@ -33,8 +35,8 @@ class PetCustomization {
         image(this.petImages[4], 850, height / 2 - 130, 300, 300);
     }
 
+    //Display the labels for each pet
     displayPetLabels() {
-        // Add a label for each pet image
         textSize(18);
         textAlign(CENTER, CENTER);
         fill(0);
@@ -44,6 +46,7 @@ class PetCustomization {
         text("Pet 4", 1000, height / 2 + 170);
     }
 
+    //Check which pet the user clicked on
     checkChosenPet() {
         if (mouseX > 140 && mouseX < 440 && mouseY > height / 2 - 130 && mouseY < height / 2 + 170) {
             this.chosenPet = this.petImages[1];

@@ -1,6 +1,6 @@
 class AnxietyGame {
     constructor(tilesImage, bubbleImages, bubblePopSound, gameDuration) {
-        this.tilesImage = tilesImage;
+        this.backgroundImage = loadImage("assets/images/bathroom.png"); // Background image
         this.bubbleImages = bubbleImages;
         this.bubblePopSound = bubblePopSound;
         this.bubbles = [];
@@ -27,7 +27,7 @@ class AnxietyGame {
     }
 
     display() {
-        background(this.tilesImage);
+        background(this.backgroundImage);
 
         image(this.buttonImage, width / 2 + 410, height / 2 - 330, 180, 180); // The image of the exit button
 
@@ -42,8 +42,6 @@ class AnxietyGame {
             this.mousePressed();
         }
 
-        // Display the moving bubble images
-        // if (gameDuration.getDuration() !== 30) {
         // Only create new bubbles if the game duration is not 30 seconds
         for (let bubble of this.bubbles) {
             bubble.move();

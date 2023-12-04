@@ -20,12 +20,12 @@ let titleBackgroundImage; //The background image for the title state
 let anxietyGame; // The class that handles the anxiety game
 let bubbleImages = []; // Array to store bubble images
 let bubbles = []; // Array to store bubble objects
-let tilesImage; //Th eimage of tiles for background of bubble game
+let tilesImage; //The image of tiles for background of bubble game
 let gameDuration; //Duration of the bubble game for anxiety
 let bubblePopSound; //Sound effect for bubble popping
 let positiveAffirmation; //The state which has the positive affirmation journal mini game
 let painting; //The state which has the painting mini game
-
+let happyPrompt; //Declaration of the class for Happy emotion
 
 /**
  * Description of preload
@@ -35,7 +35,7 @@ function preload() {
     for (let i = 0; i < 4; i++) {
         buttonImages[i] = loadImage(`assets/images/button.png`);
     }
-    buttonText = ["Anxious", "Discouraged", "Angry"];
+    buttonText = ["Anxious", "Discouraged", "Angry", "Happy"];
     //The image for the background of title state  
     titleBackgroundImage = loadImage(`assets/images/titleBackground.png`)
     // Load bubble images into the array
@@ -64,6 +64,7 @@ function setup() {
     anxietyGame = new AnxietyGame(tilesImage, bubbleImages, bubblePopSound, gameDuration.getDuration());
     positiveAffirmation = new PositiveAffirmation();
     painting = new Painting(petCustomization);
+    happyPrompt = new HappyPrompt(petCustomization);
 }
 
 /**
@@ -86,6 +87,8 @@ function draw() {
         positiveAffirmation.prompt();
     } else if (state === "painting") {
         painting.display();
+    } else if (state === "happyPrompt") {
+        happyPrompt.display();
     }
 }
 
@@ -106,8 +109,11 @@ function mousePressed() {
         positiveAffirmation.mousePressed();
     } else if (state === "painting") {
         painting.mousePressed();
+    } else if (state === "happyPrompt") {
+        hello.handleMousePress();
     }
 }
+
 function mouseReleased() {
     if (state === "positiveAffirmation") {
         positiveAffirmation.mouseReleased();
